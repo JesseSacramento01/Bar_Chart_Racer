@@ -1,5 +1,7 @@
 package OrderTest;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -35,6 +37,11 @@ public class Order implements Comparable<Order>{
 
             Collections.sort(orders); // usamos o metodo sort que vem de Collections, para ordenar
 
+            FileWriter fileWriter = new FileWriter("OrderCities");
+            fileWriter.write(orders.get(3).city+" , "+orders.get(3).qty);
+            fileWriter.close();
+
+
             for (Order order: orders){ // para percorrer sobre cada Item da lista
                 System.out.println(order);
             }
@@ -51,7 +58,7 @@ public class Order implements Comparable<Order>{
             List<Order> orderList = new ArrayList<>(); // Lista que gaurdará todas as cidades para serem ordenadas
 
             // Vai ler os arquivos no dado documento e vai guardar na variável citiesaFile
-            List<String> citiesFile = Files.readAllLines(Paths.get("C:\\Users\\JesseSacramento\\IdeaProjects\\Georgia_Professor_Project\\src\\Ipbeja\\Cities"));
+            List<String> citiesFile = Files.readAllLines(Paths.get("C:\\Users\\JesseSacramento\\IdeaProjects\\Bar Chart Racer\\src\\Cities"));
 
             for (int i = 0; i< citiesFile.size() -1; i++) {
                 // separa a linha das informações a cada vírgula
@@ -72,7 +79,7 @@ public class Order implements Comparable<Order>{
         }
 
 
-        @Override
+        /*@Override
         public String toString() { // para as informações serem apresentadas em forma de String.
             return "Order{" +
                     "id=" + id +
@@ -81,7 +88,7 @@ public class Order implements Comparable<Order>{
                     ", qty=" + qty +
                     ", continent='" + continent + '\'' +
                     '}';
-        }
+        }*/
     }
 
 
