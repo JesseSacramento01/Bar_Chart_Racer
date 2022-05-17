@@ -20,23 +20,13 @@ class CityTest {
         String path = "C:\\Users\\JesseSacramento\\IdeaProjects\\Bar Chart Racer\\src\\Cities";
         City city = new City();
 
-        List<City> citiesList = city.citiesList(path); // lista das cidades lidas
-        List<String> readCities = new ArrayList<>();   // lista das cidades lidas em formato String
+        List<String> citiesFile = city.readFile(path); // lista das cidades lidas
 
         // Expected
-        List<String> citiesFile = Files.readAllLines(Paths.get(path)); // o que se espera do arquivo lido
-
-        // iteração para adicionar o conteúdo do objecto city na lista em formato de String
-        for (City city1 : citiesList) {
-            readCities.add(city1.toString());
-
-        }
+        List<String> expected = Files.readAllLines(Paths.get(path)); // o que se espera do arquivo lido
 
         // verificar se o ficheiro foi lido correctamente
-        assertEquals(citiesFile.toString(), readCities.toString());
-
-        // Verificar se aprimeira cidade é a esperada
-        assertEquals("Beijing", citiesList.get(0).city);
+        assertEquals(expected, citiesFile);
 
     }
 

@@ -41,13 +41,13 @@ public class City implements Comparable<City>{
             List<City> cityList = new ArrayList<>(); // Lista que gaurdará todas as cidades para serem ordenadas
             List<String> citiesFile = readFile(path); // arquivo lido das cidades
 
-            for (int i = 0; i< citiesFile.size(); i++) {
+            for (String s : citiesFile) {
                 // separa a linha das informações a cada vírgula
                 // Transforma em um array de Strings
-                String[] info = citiesFile.get(i).split(",");
+                String[] info = s.split(",");
 
                 // cria-se o objecto que contém todos os atributos do contrutor que serão as informações das cidades
-                City city = new City(Integer.parseInt(info[0]),info[1],info[2],Integer.parseInt(info[3]),info[4]);
+                City city = new City(Integer.parseInt(info[0]), info[1], info[2], Integer.parseInt(info[3]), info[4]);
                 // Coloca-se na lista das cidades para ordenar
                 cityList.add(city);
             }
@@ -56,7 +56,7 @@ public class City implements Comparable<City>{
 
 
         public void setCities(List<City> cities){
-            Collections.sort(cities);
+            Collections.sort(cities); // ordena a lista dos objectos da classe City
         }
 
         public List<String> readFile(String path) throws IOException {
@@ -71,22 +71,14 @@ public class City implements Comparable<City>{
     }
 
 
-    // Main
-    public static void main(String[] args) throws IOException {
-//            String path ="C:\\Users\\JesseSacramento\\IdeaProjects\\Bar Chart Racer\\src\\Cities";
-//            List<City> cities = citiesList(path);
-//
-//            setCities(cities);
-//        for (City city : cities) {
-//            System.out.println(city.getQty());
-//        }
-
-        }
 
     @Override
     public String toString() {
         return  id+","+city+","+country+","+qty+","+continent;
+        }
 
+    // Main
+    public static void main(String[] args){
     }
 }
 
