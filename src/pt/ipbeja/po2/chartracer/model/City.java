@@ -1,8 +1,5 @@
 package pt.ipbeja.po2.chartracer.model;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -10,75 +7,83 @@ import java.util.*;
  * @version 11/05/2022
  */
 
-public class City implements Comparable<City>{
-        int id;
-        String city;
-        String country;
-        int qty;
-        String continent;
+public class City implements Comparable<City> {
+    private int year;
+    private String cityName;
+    private String countryName;
+    private int qty;
+    private String continentName;
+
+    /**
+     * @param year          the year of the city
+     * @param cityName      the name of the city
+     * @param countryName   the name of the country
+     * @param qty           the population quantity of the city
+     * @param continentName the name of the continent
+     */
+    public City(int year, String cityName, String countryName, int qty, String continentName) {
+        this.year = year;
+        this.cityName = cityName;
+        this.countryName = countryName;
+        this.qty = qty;
+        this.continentName = continentName;
+    }
 
 
+    /**
+     * @param o object of th class City
+     * @return return qty - o.getQty()
+     */
+    @Override
+    public int compareTo(City o) {
+        return qty - o.getQty();
+    }
 
-        public City(int id, String city, String country, int qty, String continent){
-            this.id = id;
-            this.city = city;
-            this.country = country;
-            this.qty = qty;
-            this.continent = continent;
+    /**
+     * @param lines is a list of the file read
+     * @return cityList List of the objects from the class city
+     */
+    public static List<City> citiesList(List<String> lines) {
+        List<City> cityList = new ArrayList<>();
+        //List that will store the cities to be sorted
+
+        for (String s : lines) {
+            //split a line of the file through the comma
+            // Transform in an array of Strings
+            String[] info = s.split(",");
+
+
+            // The object containing all the constructor attributes that will be the cities information is created
+            City city = new City(Integer.parseInt(info[0]), info[1], info[2], Integer.parseInt(info[3]), info[4]);
+
+            // will be inserted in a list to be sort
+            cityList.add(city);
         }
-
-        public City(){
-
-        }
+        return cityList;
+    }
 
 
-        @Override
-        public int compareTo(City o) {
-            return  qty - o.getQty();
-        }
-
-        public List<City> citiesList(String path) throws IOException {
-            List<City> cityList = new ArrayList<>(); // Lista que gaurdará todas as cidades para serem ordenadas
-            List<String> citiesFile = readFile(path); // arquivo lido das cidades
-
-            for (String s : citiesFile) {
-                // separa a linha das informações a cada vírgula
-                // Transforma em um array de Strings
-                String[] info = s.split(",");
-
-                // cria-se o objecto que contém todos os atributos do contrutor que serão as informações das cidades
-                City city = new City(Integer.parseInt(info[0]), info[1], info[2], Integer.parseInt(info[3]), info[4]);
-                // Coloca-se na lista das cidades para ordenar
-                cityList.add(city);
-            }
-            return cityList; // retorna a lista
-        }
+    /**
+     * Sort a list of objects from the class city
+     *
+     * @param cities is a List of the lines Read int the file of the cities
+     */
+    public void setCities(List<City> cities) {
+        Collections.sort(cities); // Sort a list of objects from the class city
+    }
 
 
-        public void setCities(List<City> cities){
-            Collections.sort(cities); // ordena a lista dos objectos da classe City
-        }
-
-        public List<String> readFile(String path) throws IOException {
-            // Vai ler os arquivos no dado documento e vai guardar na variável citiesaFile
-            return Files.readAllLines(Paths.get(path));
-        }
-
-
-    // Getters
+    /**
+     * Method who returns the populations quantity
+     *
+     * @return qty the quantity of population
+     */
     public int getQty() {
         return qty;
     }
 
-
-
-    @Override
-    public String toString() {
-        return  id+","+city+","+country+","+qty+","+continent;
-        }
-
     // Main
-    public static void main(String[] args){
+    public static void main(String[] args) {
     }
 }
 
