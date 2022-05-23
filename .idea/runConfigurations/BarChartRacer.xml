@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="BarChartRacer" type="Application" factoryName="Application" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="pt.ipbeja.po2.chartracer.gui.BarChartRacer" />
+    <module name="Bar Chart Racer" />
+    <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\javafx-sdk-17.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="pt.ipbeja.po2.chartracer.gui.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

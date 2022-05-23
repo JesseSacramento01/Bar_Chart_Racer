@@ -12,9 +12,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Jessé Sacramento
+ * @number 21938
  * @version 17/05/2022
  */
 class CityTest {
+    /**
+     * test to the first scenario, verify if the file was read correctly
+     * @throws IOException for the file that will be read
+     */
     @Test
     void test1() throws IOException {
         String path = "C:\\Users\\JesseSacramento" +
