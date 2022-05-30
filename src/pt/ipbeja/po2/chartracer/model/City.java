@@ -1,6 +1,11 @@
 package pt.ipbeja.po2.chartracer.model;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * @author Jessé Sacramento
@@ -8,6 +13,7 @@ import java.util.*;
  */
 
 public class City implements Comparable<City> {
+    static Scanner scanner = new Scanner(System.in);
     private int year;
     private String cityName;
     private String countryName;
@@ -44,14 +50,24 @@ public class City implements Comparable<City> {
      * @return cityList List of the objects from the class city
      */
     public static List<City> citiesList(List<String> lines) {
-        List<City> cityList = new ArrayList<>();
         //List that will store the cities to be sorted
+        List<City> cityList = new ArrayList<>();
 
-        for (String s : lines) {
+        Stream<String> linesStream = lines.stream();
+
+        // filter in order to get just the information we need about the cities
+        Stream<String> linesFileFilter = linesStream.filter(s -> s.startsWith("15")
+                || s.startsWith("16") || s.startsWith("17") || s.startsWith("18") ||
+                s.startsWith("19") || s.startsWith("20"));
+
+        // transform the stream in a list
+        List<String> citiesLines = linesFileFilter.toList();
+
+
+        for (String s : citiesLines) {
+
             //split a line of the file through the comma
-            // Transform in an array of Strings
             String[] info = s.split(",");
-
 
             // The object containing all the constructor attributes that will be the cities information is created
             City city = new City(Integer.parseInt(info[0]), info[1], info[2], Integer.parseInt(info[3]), info[4]);
@@ -68,7 +84,7 @@ public class City implements Comparable<City> {
      *
      * @param cities is a List of the lines Read int the file of the cities
      */
-    public void setCities(List<City> cities) {
+    public static void setCities(List<String> cities) {
         Collections.sort(cities); // Sort a list of objects from the class city
     }
 
@@ -84,6 +100,36 @@ public class City implements Comparable<City> {
 
     // Main
     public static void main(String[] args) {
+        try {
+           List<String> file = Files.readAllLines(Paths.get("C:\\Users\\JesseSacramento\\IdeaProjects\\" +
+                   "21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt"));
+
+            System.out.println(citiesListToString());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     *
+     * @return cities the list of the cities in a String format
+     * @throws IOException
+     */
+    public static List<String> citiesListToString() throws IOException {
+        List<String> cities = new ArrayList<>();
+        List<String> file = Files.readAllLines(Paths.get("C:\\Users\\JesseSacramento\\IdeaProjects\\" +
+                "21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt"));
+
+        List<City> citiesList = citiesList(file);
+
+        // transform the list of cities in a list of Strings
+        for (City city: citiesList){
+            String singleLineCity = city.year+","+city.cityName+","+city.countryName+","+city.qty+","
+                    +city.continentName;
+            cities.add(singleLineCity);
+        }
+        return cities;
     }
 }
 

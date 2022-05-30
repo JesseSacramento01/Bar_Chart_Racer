@@ -6635,7 +6635,7 @@ Sources: SEDAC; United Nations; Demographia
 1973,Paris,France,9190,Europe
 1973,Rio de Janeiro,Brazil,7780,Latin America
 1973,Shanghai,China,7960,East Asia
-1973,SÃ£o Paulo,Brazil,8816,Latin America
+1973,São Paulo,Brazil,8816,Latin America
 1973,Tokyo,Japan,25288,East Asia
 
 12
@@ -6649,7 +6649,7 @@ Sources: SEDAC; United Nations; Demographia
 1974,Paris,France,9295,Europe
 1974,Rio de Janeiro,Brazil,8040,Latin America
 1974,Shanghai,China,7980,East Asia
-1974,SÃ£o Paulo,Brazil,9215,Latin America
+1974,São Paulo,Brazil,9215,Latin America
 1974,Tokyo,Japan,25952,East Asia
 
 12
@@ -7237,7 +7237,7 @@ Sources: SEDAC; United Nations; Demographia
 2016,New York,United States,18633,North America
 2016,Osaka,Japan,20295,East Asia
 2016,Shanghai,China,24420,East Asia
-2016,SÃ£o Paulo,Brazil,21277,Latin America
+2016,São Paulo,Brazil,21277,Latin America
 2016,Tokyo,Japan,38065,East Asia
 
 12
@@ -7251,7 +7251,7 @@ Sources: SEDAC; United Nations; Demographia
 2017,New York,United States,18673,North America
 2017,Osaka,Japan,20352,East Asia
 2017,Shanghai,China,25099,East Asia
-2017,SÃ£o Paulo,Brazil,21487,Latin America
+2017,São Paulo,Brazil,21487,Latin America
 2017,Tokyo,Japan,38130,East Asia
 
 12
@@ -7265,5 +7265,5 @@ Sources: SEDAC; United Nations; Demographia
 2018,New York,United States,18713,North America
 2018,Osaka,Japan,20409,East Asia
 2018,Shanghai,China,25779,East Asia
-2018,SÃ£o Paulo,Brazil,21698,Latin America
+2018,São Paulo,Brazil,21698,Latin America
 2018,Tokyo,Japan,38194,East Asia
