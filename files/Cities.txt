@@ -6985,7 +6985,7 @@ Sources: SEDAC; United Nations; Demographia
 1998,New York,United States,17465,North America
 1998,Osaka,Japan,18772,East Asia
 1998,Shanghai,China,13482,East Asia
-1998,SÃ£o Paulo,Brazil,16574,Latin America
+1998,São Paulo,Brazil,16574,Latin America
 1998,Tokyo,Japan,34105,East Asia
 
 12
@@ -6999,7 +6999,7 @@ Sources: SEDAC; United Nations; Demographia
 1999,New York,United States,17639,North America
 1999,Osaka,Japan,18716,East Asia
 1999,Shanghai,China,13721,East Asia
-1999,SÃ£o Paulo,Brazil,16794,Latin America
+1999,São Paulo,Brazil,16794,Latin America
 1999,Tokyo,Japan,34277,East Asia
 
 12
@@ -7013,7 +7013,7 @@ Sources: SEDAC; United Nations; Demographia
 2000,New York,United States,17813,North America
 2000,Osaka,Japan,18660,East Asia
 2000,Shanghai,China,13959,East Asia
-2000,SÃ£o Paulo,Brazil,17014,Latin America
+2000,São Paulo,Brazil,17014,Latin America
 2000,Tokyo,Japan,34450,East Asia
 
 12
@@ -7209,7 +7209,7 @@ Sources: SEDAC; United Nations; Demographia
 2014,New York,United States,18547,North America
 2014,Osaka,Japan,20089,East Asia
 2014,Shanghai,China,22989,East Asia
-2014,SÃ£o Paulo,Brazil,20785,Latin America
+2014,São Paulo,Brazil,20785,Latin America
 2014,Tokyo,Japan,37768,East Asia
 
 12
@@ -7223,7 +7223,7 @@ Sources: SEDAC; United Nations; Demographia
 2015,New York,United States,18593,North America
 2015,Osaka,Japan,20238,East Asia
 2015,Shanghai,China,23741,East Asia
-2015,SÃ£o Paulo,Brazil,21066,Latin America
+2015,São Paulo,Brazil,21066,Latin America
 2015,Tokyo,Japan,38001,East Asia
 
 12

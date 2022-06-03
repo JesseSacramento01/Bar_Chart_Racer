@@ -5,4 +5,5 @@ package pt.ipbeja.po2.chartracer.model.View;
  * @version 17/05/2022
  */
 public interface View {
+
 }

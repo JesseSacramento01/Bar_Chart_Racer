@@ -1,22 +1,25 @@
-package pt.ipbeja.po2.chartracer.gui;/**
- * @author Jessé Sacramento
- * @version 20/05/2022
- */
 
+package pt.ipbeja.po2.chartracer.gui;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.control.Labeled;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import jdk.jfr.Label;
 import pt.ipbeja.po2.chartracer.model.City;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author Jessé Sacramento
+ * @version 20/05/2022
+ */
 public class BarChartRacer extends Application {
 
     public static void main(String[] args) {
@@ -29,7 +32,7 @@ public class BarChartRacer extends Application {
     private final double RECTANGLE_WIDTH = 40;
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
         primaryStage.setOnCloseRequest(
                 e -> Platform.runLater( () -> {Platform.exit(); System.exit(0);} ) );
 
@@ -43,19 +46,46 @@ public class BarChartRacer extends Application {
 
     }
 
-    public void barRectangle(Pane pane) {
-        List<Rectangle> rectangles = Arrays.asList(createRectangle(X,0,700,RECTANGLE_WIDTH,Color.BLUE),
-                createRectangle(X,50,620,RECTANGLE_WIDTH,Color.ORANGERED),
-                createRectangle(X,100,580,RECTANGLE_WIDTH,Color.YELLOW),
-                createRectangle(X,150,320,RECTANGLE_WIDTH,Color.GREEN),
-                createRectangle(X,200,200,RECTANGLE_WIDTH,Color.PURPLE),
-                createRectangle(X,250,139,RECTANGLE_WIDTH,Color.BLUE),
-                createRectangle(X,300,128,RECTANGLE_WIDTH,Color.BROWN),
-                createRectangle(X,350,111,RECTANGLE_WIDTH,Color.PINK),
-                createRectangle(X,400,98,RECTANGLE_WIDTH,Color.DEEPPINK));
+    public void barRectangle(Pane pane) throws IOException {
 
-        pane.getChildren().addAll(rectangles);
-    }
+
+
+
+        List<String> linesRead = Files.readAllLines(Paths.get("C:\\Users\\JesseSacramento\\IdeaProjects" +
+                                            "\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt"));
+
+        List<String> str = new ArrayList<>();
+
+        List<City> cities = City.citiesList(linesRead);
+
+        int referenceYear = cities.get(0).getYear();
+
+        List<Integer> numberOfCity = City.getNumberOfCities(linesRead);
+
+        City.writeCityFile(cities,numberOfCity.get(2018-referenceYear),2018,numberOfCity);
+
+       linesRead = Files.readAllLines(Paths.get("C:\\Users\\JesseSacramento\\IdeaProjects" +
+                                  "\\21938_JesséSacramento_TP_PO2_2021-2022\\WrittenCities.txt"));
+
+
+
+        for (String s: linesRead){
+            str.add(s.split(",")[3]);
+        }
+
+
+            List<Rectangle> rectangles = Arrays.asList(createRectangle(X, 0, Integer.parseInt(str.get(0)), RECTANGLE_WIDTH, Color.BLUE),
+                    createRectangle(X, 50, Integer.parseInt(str.get(1)), RECTANGLE_WIDTH, Color.ORANGERED),
+                    createRectangle(X, 100, Integer.parseInt(str.get(2)), RECTANGLE_WIDTH, Color.YELLOW),
+                    createRectangle(X, 150, Integer.parseInt(str.get(3)), RECTANGLE_WIDTH, Color.GREEN),
+                    createRectangle(X, 200, Integer.parseInt(str.get(4)), RECTANGLE_WIDTH, Color.PURPLE),
+                    createRectangle(X, 250, Integer.parseInt(str.get(5)), RECTANGLE_WIDTH, Color.BLUE),
+                    createRectangle(X, 300, Integer.parseInt(str.get(6)), RECTANGLE_WIDTH, Color.BROWN),
+                    createRectangle(X, 350, Integer.parseInt(str.get(7)), RECTANGLE_WIDTH, Color.PINK),
+                    createRectangle(X, 400, Integer.parseInt(str.get(8)), RECTANGLE_WIDTH, Color.DEEPPINK));
+
+            pane.getChildren().addAll(rectangles);
+        }
 
 
     /**
