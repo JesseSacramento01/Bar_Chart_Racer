@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,34 +29,6 @@ class CityTest {
         String path = "C:\\Users\\JesseSacramento\\IdeaProjects\\" +
                 "21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt";
 
-        // the lines were read and passed to a list of Strings
-        List<String> linesRead = Files.readAllLines(Paths.get(path));
-
-
-        List<City> cities = City.citiesList(linesRead);
-
-        List<String> cityListToString = City.citiesListToString(cities);
-
-
-        // index of the set of cities
-        int firstYear = cities.get(0).getYear();
-
-        // year chosen by the user
-        int chosenYear = 1500;
-
-        // index to get the quantity of the cities
-        int qtyCitiesIndex = chosenYear - firstYear;
-
-        // get one line before the number that say how many cities are in a set
-        int indexOfTheEmptyLine = City.getNumberOfCities(linesRead).get(qtyCitiesIndex);
-
-        // transform the String in a number to use as the number of the cities
-        int numberOfCities = Integer.parseInt(linesRead.get(indexOfTheEmptyLine+1));
-
-
-
-
-
         // Expected List of cities
         List<String> expected = Arrays.asList(
                 "1500,Beijing,China,672,East Asia",
@@ -71,17 +44,37 @@ class CityTest {
                 "1500,Tabriz,Iran,250,Middle East",
                 "1500,Vijayanagar,India,500,South Asia");
 
+
+        // the lines were read and passed to a list of Strings
+        List<String> linesRead = Files.readAllLines(Paths.get(path));
+
+        // list of objects from the class City
+        List<City> cities = City.citiesList(linesRead);
+
+        cities = City.getSpecificSet(cities, "1500");
+
+        // transform the list of city on a list of Strings
+        List<String> cityListToString = City.citiesListToString(cities);
+
+        // verify if the file was correctly read
+        assertEquals(expected, cityListToString);
+
         // last line of the file cities.txt
         String lastLine = "2018,Tokyo,Japan,38194,East Asia";
 
-        // Verify if the file was read correctly
-        assertEquals(expected, cityListToString.subList(0,numberOfCities));
+        // list of objects city
+        cities = City.citiesList(linesRead);
 
-        int lastIndex = linesRead.size() - (linesRead.size() - cityListToString.size());
-        System.out.println(lastIndex);
+        // get the set of the 2018 year
+        cities = City.getSpecificSet(cities, "2018");
+
+        // transform the list of City in a list of String
+        cityListToString = City.citiesListToString(cities);
+
+        int indexOfTheLastLine = cityListToString.lastIndexOf("2018,Tokyo,Japan,38194,East Asia");
 
         // Verify if the last line was correctly read
-        assertEquals(lastLine, cityListToString.get(lastIndex-1));
+        assertEquals(lastLine, cityListToString.get(indexOfTheLastLine));
 
     }
 
@@ -121,90 +114,56 @@ class CityTest {
 
 
 
-        List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\JesseSacramento" +
-                "\\IdeaProjects\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt"));
+        List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\JesseSacramento\\IdeaProjects\\" +
+                "21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt"));
 
 
         // A list of City objects
         List<City> cities = City.citiesList(lines);
 
-        // index of the set of cities
-        int firstYear = cities.get(0).getYear();
+        // get the specific set of 1500 year
+        cities = City.getSpecificSet(cities, "1500");
 
-        // year chosen by the user
-        int chosenYear = 1500;
+        // transform in a list of type String
+        List<String> citiesListToString = City.citiesListToString(cities);
 
-        // index to get the quantity of the cities
-        int qtyCitiesIndex = chosenYear - firstYear;
+        // check if are really different
+        assertNotEquals(expected, citiesListToString);
 
-        // get one line before the number that say how many cities are in a set
-        int indexOfTheEmptyLine = City.getNumberOfCities(lines).get(qtyCitiesIndex);
+        // sort the list
+        City.sortCities(cities);
 
-        // transform the String in a number to use as the number of the cities
-        int numberOfCities = Integer.parseInt(lines.get(indexOfTheEmptyLine+1));
+        System.out.println("After: " + cities);
 
+        // transform in a list of type String
+        citiesListToString = City.citiesListToString(cities);
 
-        List<String> firstYearCities = City.citiesListToString(cities.subList(0,numberOfCities));
-        System.out.println("before:" + firstYearCities);
-
-        // shuffle the List to sort next
-        Collections.shuffle(firstYearCities.subList(0, numberOfCities));
-
-        System.out.println("after:" + firstYearCities);
-
-        //show if the results are different for real
-        assertNotEquals(expected, firstYearCities.subList(0, numberOfCities));
-
-
-        // sort of the list
-        City.sortCities(cities.subList(0,numberOfCities));
-
-
-        firstYearCities = City.citiesListToString(cities.subList(0,numberOfCities));
-
-        System.out.println("After sort:" + firstYearCities);
-
-        // check if the results are now equals
-        assertEquals(expected, firstYearCities.subList(0, numberOfCities));
+        // check if now are equals
+        assertEquals(expected, citiesListToString);
 
 
 
-        // tests for the last set
-
-        chosenYear = 2018;
-
-        // index to get the quantity of the cities
-        qtyCitiesIndex = chosenYear - firstYear;
-
-        // get one line before the number that say how many cities are in a set
-        indexOfTheEmptyLine = City.getNumberOfCities(lines).get(qtyCitiesIndex);
-
-        // transform the String in a number to use as the number of the cities
-        numberOfCities = Integer.parseInt(lines.get(indexOfTheEmptyLine+1));
+        // test for the last set
 
 
-        // index of the first line of the set of cities
-        int indexOfTheLastSet = cities.size() - numberOfCities;
+        // A list of City objects
+        cities = City.citiesList(lines);
 
+        cities = City.getSpecificSet(cities,"2018");
 
-        // shuffle the List to sort next
-        Collections.shuffle(cities.subList(indexOfTheLastSet,cities.size()));
+        // transform in a list of type String
+        citiesListToString = City.citiesListToString(cities);
 
-        List<String> lastYearCities = City.citiesListToString(cities.subList(indexOfTheLastSet,cities.size()));
+        // check if are really different
+        assertNotEquals(expectedLastSet, citiesListToString);
 
-        //show if the results are different for real
-        assertNotEquals(expectedLastSet, lastYearCities.subList(0, numberOfCities));
+        // sort the list
+        City.sortCities(cities);
 
+        citiesListToString = City.citiesListToString(cities);
 
-        // sort of the list
-        City.sortCities(cities.subList(indexOfTheLastSet,cities.size()));
+        assertEquals(expectedLastSet, citiesListToString);
 
-        // transform the list of cities in a list of Strings
-        lastYearCities = City.citiesListToString(cities.subList(indexOfTheLastSet,cities.size()));
-
-
-        // check if the results are now equals
-        assertEquals(expectedLastSet, lastYearCities.subList(0, numberOfCities));
 
     }
 
@@ -233,19 +192,17 @@ class CityTest {
         // list of cities
         List<City> cities = City.citiesList(fileRead);
 
-        // get the number of the city in a specific set
-        List<Integer> numberOfCities = City.getNumberOfCities(fileRead);
+        //sort the list
+        City.sortCities(cities);
 
+        cities = City.getSpecificSet(cities,"1500");
 
-
-        int chosenYear = 1500;
         int linesQty = 5;
 
         // test the method that write the file
-        City.writeCityFile(cities,linesQty,chosenYear,numberOfCities);
+        City.writeCityFile(cities,linesQty);
 
-        List<String> readFileWritten = Files.readAllLines(Paths.get("C:\\Users\\JesseSacramento\\IdeaProjects" +
-                                               "\\21938_JesséSacramento_TP_PO2_2021-2022\\WrittenCities.txt"));
+        List<String> readFileWritten = Files.readAllLines(Paths.get("..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\WrittenCities.txt"));
 
         // check if the file was written correctly
         // test for the first set
@@ -253,19 +210,21 @@ class CityTest {
 
 
         // test for the second set
-        chosenYear = 2018;
+
+        cities = City.citiesList(fileRead);
+
+        City.sortCities(cities);
+
+        cities = City.getSpecificSet(cities,"2018");
 
         // test the method that write the file
-        City.writeCityFile(cities,linesQty,chosenYear,numberOfCities);
+        City.writeCityFile(cities,linesQty);
 
         readFileWritten = Files.readAllLines(Paths.get("C:\\Users\\JesseSacramento\\IdeaProjects" +
                 "\\21938_JesséSacramento_TP_PO2_2021-2022\\WrittenCities.txt"));
 
         // Check if the file was written correctly
         assertEquals(expectedCitiesLastSet, readFileWritten);
-
-
-
 
     }
 

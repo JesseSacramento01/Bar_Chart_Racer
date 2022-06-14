@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
 
+
 /**
  * @author Jessé Sacramento
  * @version 11/05/2022
@@ -14,11 +15,11 @@ import java.util.stream.Stream;
 
 public class City implements Comparable<City> {
     static Scanner scanner = new Scanner(System.in);
-    private  int year;
-    private  String cityName;
-    private  String countryName;
-    private  int qty;
-    private  String continentName;
+    private String year;
+    private String cityName;
+    private String countryName;
+    private int qty;
+    private String continentName;
 
 
     /**
@@ -28,7 +29,7 @@ public class City implements Comparable<City> {
      * @param qty           the population quantity of the city
      * @param continentName the name of the continent
      */
-    public City(int year, String cityName, String countryName, int qty, String continentName) {
+    public City(String year, String cityName, String countryName, int qty, String continentName) {
         this.year = year;
         this.cityName = cityName;
         this.countryName = countryName;
@@ -43,10 +44,8 @@ public class City implements Comparable<City> {
      */
     @Override
     public int compareTo(City o) {
-
-        return  o.getQty() - qty;
+        return o.getQty() - qty;
     }
-
 
 
     /**
@@ -57,15 +56,14 @@ public class City implements Comparable<City> {
         //List that will store the cities to be sorted
         List<City> cityList = new ArrayList<>();
 
-        Stream<String> linesStream = lines.stream();
 
+        Stream<String> linesStream = lines.stream();
 
         // filter in order to get just the information we need about the cities
         Stream<String> linesFileFilter = linesStream.filter(s -> s.contains(","));
 
         // transform the stream in a list
         List<String> citiesLines = linesFileFilter.toList();
-
 
         for (String s : citiesLines) {
 
@@ -74,7 +72,7 @@ public class City implements Comparable<City> {
 
 
             // The object containing all the constructor attributes that will be the cities information is created
-            City city = new City(Integer.parseInt(info[0]), info[1], info[2], Integer.parseInt(info[3]), info[4]);
+            City city = new City(info[0], info[1], info[2], Integer.parseInt(info[3]), info[4]);
 
             // will be inserted in a list to be sort
             cityList.add(city);
@@ -104,61 +102,55 @@ public class City implements Comparable<City> {
 
 
     /**
-     *
      * @param citiesList the list of objects of the type City
      * @return return the list of city in a format of a String
      */
-    public static List<String> citiesListToString(List<City> citiesList)  {
+    public static List<String> citiesListToString(List<City> citiesList) {
         List<String> cities = new ArrayList<>();
 
 
         // transform the list of cities in a list of Strings
-        for (City city: citiesList){
-            String singleLineCity = city.year+","+city.cityName+","+city.countryName+","+city.qty+","
-                    +city.continentName;
+        for (City city : citiesList) {
+            String singleLineCity = city.year + "," + city.cityName + "," + city.countryName + "," +
+                    city.qty + "," + city.continentName;
             cities.add(singleLineCity);
         }
         return cities;
     }
 
     /**
-     *
-     * @param cities list of cities to be sorted and written
-     * @param linesQty quantity of lines to be written
+     * @param cities     list of City objects
      * @param chosenYear the year chosen by the user
-     * @param numberOfCities number of cities in a specific set
+     * @return return the list of a specific set
+     */
+    public static List<City> getSpecificSet(List<City> cities, String chosenYear) {
+        List<City> specificList = new ArrayList<>();
+        for (City city : cities) {
+            if (city.getYear().equals(chosenYear)) {
+                specificList.add(city);
+            }
+        }
+        return specificList;
+    }
+
+    /**
+     * @param cities   list of cities to be sorted and written
+     * @param linesQty quantity of lines to be written
      * @throws IOException Exception to the file that will be written
      */
-    public static void writeCityFile(List<City> cities, int linesQty,int chosenYear,List<Integer> numberOfCities) throws IOException {
-        // referenceYear
-        int referenceYear = cities.get(0).getYear();
-
-        //number of cities on the set
-        int numOfCities = numberOfCities.get(chosenYear - referenceYear);
-
-        // number of the set
-        int numberOfSet = chosenYear - referenceYear;
-
-        // get the Index of the first line
-        int indexOfFirstLine = getTheIndexOfFirstLine(cities,referenceYear).get(numberOfSet);
-
-        // sort the list
-        // sort only the sublist from the first line to the last line of the set
-        sortCities(cities.subList(indexOfFirstLine, (indexOfFirstLine + numOfCities)));
-
+    public static void writeCityFile(List<City> cities, int linesQty) throws IOException {
         // list of the cities
         List<String> citiesToString = citiesListToString(cities);
 
-
         // stream to filter the information
-        Stream<String> filterStream = citiesToString.stream().filter(s -> s.startsWith("" + chosenYear))
-                .limit(linesQty);
+        Stream<String> filterStream = citiesToString.stream().limit(linesQty);
 
         // list of the cities filtered
         List<String> citiesToWrite = filterStream.toList();
 
 
-        FileWriter fileWriter = new FileWriter("WrittenCities.txt");
+        FileWriter fileWriter = new FileWriter("..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\WrittenCities.txt");
+
 
         for (String list : citiesToWrite) {
             fileWriter.write(list + "\n");
@@ -179,69 +171,59 @@ public class City implements Comparable<City> {
     }
 
     /**
-     *
      * @param line the lines read
      * @return return a list with the number of the cities in a specific set
      */
-    public static List<Integer> getNumberOfCities(List<String> line){
+    public static Map<String, Integer> getNumberOfCities(List<String> line) {
         int count;
-        List<Integer> numberOfCities = new ArrayList<>();
+        String key;
 
-        for (count = 0; count < line.size() - 1; count++){
-            if (line.get(count).isEmpty()){
-                numberOfCities.add(Integer.parseInt(line.get(count+1))); // the next line has the number of cities --> count + 1
+        Map<String, Integer> numberOfCity = new HashMap<>();
+
+        for (count = 0; count < line.size() - 1; count++) {
+            if (line.get(count).isEmpty()) {
+                // the next line has the number of cities --> count + 1
+
+                // count + 2 because two lines next we have the first line of the information from the cities
+                // in a specific set
+                int index = line.get(count + 2).indexOf(","); // index of the first comma
+                key = line.get(count + 2).substring(0, index);
+                numberOfCity.put(key, Integer.parseInt(line.get(count + 1)));
+
             }
         }
-      return numberOfCities;
+        return numberOfCity;
     }
 
-    public int getYear() {
+    // getters
+    public String getYear() {
         return year;
     }
 
-    /**
-     *
-     * @param cities the list of objects of the type City
-     * @param referenceYear the first year of the first set
-     * @return return the a list with the index of the first lines of a specific set
-     */
-    public static List<Integer> getTheIndexOfFirstLine(List<City> cities, int referenceYear){
-        // list of the index of the first line in a specific set
-        List<Integer> indexOfTheFirstLines = new ArrayList<>();
-
-        int numberOfSets = 0;
-        indexOfTheFirstLines.add(numberOfSets); // put the first index of the set of the first year
-
-        for (City city : cities){
-            numberOfSets += 1;
-            if (city.getYear() != referenceYear){
-                referenceYear++; // increase the year to continue to count others sets
-                indexOfTheFirstLines.add(numberOfSets - 1); // numberOfSets - 1 because the count start at index 0
-            }
-        }
-        return indexOfTheFirstLines;
+    public String getCityName() {
+        return cityName;
     }
 
     // Main
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
         try {
             List<String> file = Files.readAllLines(Paths.get("C:\\Users\\JesseSacramento\\IdeaProjects\\" +
                     "21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt"));
 
 
+            //int chosenYear = 2018;
+            Map<String, Integer> numberOfCities = getNumberOfCities(file);
 
+            System.out.println("1500 index: " + numberOfCities.get("1500"));
 
-            int chosenYear = 2018;
-            List<Integer> numberOfCities = getNumberOfCities(file);
-
-            List<City> cities = citiesList(file);
-
-             writeCityFile(cities,12,chosenYear,numberOfCities);
+            //System.out.println(citiesList(file));
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 }
 
 
