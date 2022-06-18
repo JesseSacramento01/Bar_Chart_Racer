@@ -1,5 +1,6 @@
 package pt.ipbeja.po2.chartracer.model;
 
+import javafx.scene.paint.Color;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -26,8 +27,7 @@ class CityTest {
     void test1() throws IOException {
 
 
-        String path = "C:\\Users\\JesseSacramento\\IdeaProjects\\" +
-                "21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt";
+        String path = "..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt";
 
         // Expected List of cities
         List<String> expected = Arrays.asList(
@@ -45,8 +45,13 @@ class CityTest {
                 "1500,Vijayanagar,India,500,South Asia");
 
 
+
+
         // the lines were read and passed to a list of Strings
         List<String> linesRead = Files.readAllLines(Paths.get(path));
+
+
+
 
         // list of objects from the class City
         List<City> cities = City.citiesList(linesRead);
@@ -114,8 +119,7 @@ class CityTest {
 
 
 
-        List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\JesseSacramento\\IdeaProjects\\" +
-                "21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt"));
+        List<String> lines = Files.readAllLines(Paths.get("..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt"));
 
 
         // A list of City objects
@@ -185,8 +189,7 @@ class CityTest {
                 "2018,Beijing,China,22674,East Asia",
                 "2018,Mumbai,India,22120,South Asia");
 
-        List<String> fileRead = Files.readAllLines(Paths.get("C:\\Users\\JesseSacramento\\IdeaProjects" +
-                                                "\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt"));
+        List<String> fileRead = Files.readAllLines(Paths.get("..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt"));
 
 
         // list of cities
@@ -220,8 +223,7 @@ class CityTest {
         // test the method that write the file
         City.writeCityFile(cities,linesQty);
 
-        readFileWritten = Files.readAllLines(Paths.get("C:\\Users\\JesseSacramento\\IdeaProjects" +
-                "\\21938_JesséSacramento_TP_PO2_2021-2022\\WrittenCities.txt"));
+        readFileWritten = Files.readAllLines(Paths.get("..\\21938_JesséSacramento_TP_PO2_2021-2022\\WrittenCities.txt"));
 
         // Check if the file was written correctly
         assertEquals(expectedCitiesLastSet, readFileWritten);

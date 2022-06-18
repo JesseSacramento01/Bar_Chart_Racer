@@ -1,5 +1,6 @@
 package pt.ipbeja.po2.chartracer.model;
 
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,19 +8,19 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
 
-
 /**
  * @author Jessé Sacramento
  * @version 11/05/2022
  */
 
 public class City implements Comparable<City> {
-    static Scanner scanner = new Scanner(System.in);
+    private static final int DEGREE = 255;
     private String year;
     private String cityName;
     private String countryName;
     private int qty;
     private String continentName;
+    private List<Integer> numbers;
 
 
     /**
@@ -37,6 +38,18 @@ public class City implements Comparable<City> {
         this.continentName = continentName;
     }
 
+    public City(List<City> cities) {
+        int number;
+        this.numbers = new ArrayList<>();
+        for (City city : cities) {
+            number = city.cityName.hashCode() % DEGREE;
+            if (number < 0) { // tranform the negative number in positive
+                number = number * -1;
+            }
+            numbers.add(number);
+        }
+    }
+
 
     /**
      * @param o object of th class City
@@ -44,6 +57,7 @@ public class City implements Comparable<City> {
      */
     @Override
     public int compareTo(City o) {
+
         return o.getQty() - qty;
     }
 
@@ -207,23 +221,61 @@ public class City implements Comparable<City> {
     // Main
     public static void main(String[] args) {
         try {
-            List<String> file = Files.readAllLines(Paths.get("C:\\Users\\JesseSacramento\\IdeaProjects\\" +
-                    "21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt"));
+            List<String> file = Files.readAllLines(Paths.get("..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt"));
 
 
-            //int chosenYear = 2018;
-            Map<String, Integer> numberOfCities = getNumberOfCities(file);
+            findAllFirstData(citiesList(file));
 
-            System.out.println("1500 index: " + numberOfCities.get("1500"));
-
-            //System.out.println(citiesList(file));
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public static long getMaxValue(List<City> cities) {
+        long max = Integer.MIN_VALUE;
+        for (City city : cities) {
+            if (city.getQty() > max) {
+                max = city.getQty();
+            }
+        }
+        return max;
+    }
 
+
+    public static List<String> findAllFirstData(List<City> cities) {
+        Optional<City> cityStream = cities.stream().findFirst();
+        String firstLineInformation = cityStream.stream().toList().get(0).year;
+        List<String> files = new ArrayList<>();
+
+        for (City city : cities) {
+            if (!(city.getYear().equals(firstLineInformation))) {
+                files.add(firstLineInformation);
+                firstLineInformation = city.getYear();
+            }
+        }
+        files.add(firstLineInformation);
+        return files; // return all the first information of all lines
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        City city = (City) o;
+        return qty == city.qty && year.equals(city.year) && cityName.equals(city.cityName) && countryName.equals(city.countryName) && Objects.equals(continentName, city.continentName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cityName);
+    }
+
+
+    public List<Integer> getNumbers() {
+        return numbers;
+    }
 }
 
 
