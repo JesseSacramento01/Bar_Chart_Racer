@@ -7,8 +7,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author Jessé Sacramento
- * @version 11/06/2022
+ * @author Jessé Sacramento & Luiz Carlos Morais
+ * @number 21938 & 20347
+ * @version 21/06/2022
  */
 public class BarModel {
 

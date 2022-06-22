@@ -9,8 +9,9 @@ import java.util.*;
 import java.util.stream.Stream;
 
 /**
- * @author Jessé Sacramento
- * @version 11/05/2022
+ * @author Jessé Sacramento & Luiz Carlos Morais
+ * @number 21938 & 20347
+ * @version 21/05/2022
  */
 
 public class City implements Comparable<City> {

@@ -23,8 +23,9 @@ import java.nio.file.Paths;
 import java.util.*;
 
 /**
- * @author Jessé Sacramento
- * @version 20/05/2022
+ * @author Jessé Sacramento & Luiz Carlos Morais
+ * @number 21938 & 20347
+ * @version 21/05/2022
  */
 public class BarChartRacer {
     private final double WIDTH = 900;

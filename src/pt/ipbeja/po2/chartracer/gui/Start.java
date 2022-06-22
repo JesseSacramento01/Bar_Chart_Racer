@@ -1,6 +1,7 @@
 package pt.ipbeja.po2.chartracer.gui;/**
- * @author Jessé Sacramento
- * @version 15/06/2022/****
+ * @author Jessé Sacramento & Luiz Carlos Morais
+ * @number 21938 & 20347
+ * @version 21/06/2022/
  */
 
 import javafx.application.Application;

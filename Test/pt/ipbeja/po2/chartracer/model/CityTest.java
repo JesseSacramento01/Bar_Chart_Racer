@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 /**
- * @author Jessé Sacramento
- * @number 21938
+ * @author Jessé Sacramento & Luiz Carlos Morais
+ * @number 21938 & 20347
  * @version 01/06/2022
  */
 class CityTest {
