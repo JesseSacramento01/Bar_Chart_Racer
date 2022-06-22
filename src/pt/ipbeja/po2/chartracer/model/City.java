@@ -164,7 +164,7 @@ public class City implements Comparable<City> {
         List<String> citiesToWrite = filterStream.toList();
 
 
-        FileWriter fileWriter = new FileWriter("..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\WrittenCities.txt");
+        FileWriter fileWriter = new FileWriter("..\\21938_JesséSacramento_20347_LuizFehlbergTP_PO2_2021-2022\\files\\WrittenCities.txt");
 
 
         for (String list : citiesToWrite) {

@@ -1,10 +1,6 @@
-package pt.ipbeja.po2.chartracer.gui;/**
- * @author Jessé Sacramento
- * @version 15/06/2022
- */
+package pt.ipbeja.po2.chartracer.gui;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.Pane;
@@ -19,9 +15,13 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Jessé Sacramento & Luiz Carlos Morais
+ * @version 21/06/2022
+ * @number 21938 & 20347
+ */
+
 public class Start extends Application {
-    private final double WIDTH = 900;
-    private final double HEIGHT = WIDTH / 1.5;
 
     BarChartRacer barChartRacer;
 
@@ -37,7 +37,7 @@ public class Start extends Application {
         this.barChartRacer = new BarChartRacer();
         List<String> info = chooseTheFile(primaryStage);
 
-        this.barChartRacer.barRectangle(pane,info);
+        this.barChartRacer.barRectangle(pane, info);
 
         primaryStage.setScene(scene);
 
@@ -51,7 +51,6 @@ public class Start extends Application {
     }
 
     /**
-     *
      * @param stage the stage to show the file
      * @return return a List<String> of the chosen file
      */

@@ -1,9 +1,8 @@
 package pt.ipbeja.po2.chartracer.model;
 
-import javafx.scene.paint.Color;
+
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -13,25 +12,10 @@ import java.util.List;
  */
 public class BarModel {
 
-    public static int counter = 0;
-    public static String yearToPrint = "2018";
+
 
     public List<String> allYearsFound = new ArrayList<>();
 
-    public List<Color> getColors(){
-        List<Color> colors = new ArrayList<>();
-        colors.add(Color.BLUE);
-        colors.add(Color.GRAY);
-        colors.add(Color.YELLOW);
-        colors.add(Color.GREEN);
-        return colors;
-    }
-
-
-    /*****/
-    public int generateRandomNumber(int limit){
-        return (int) (Math.random() * limit);
-    }
 
     public int getNumberOfYears(List<String> file) {
         for (int i = 5; i < file.size(); i++) {
@@ -41,13 +25,10 @@ public class BarModel {
                 }
             }
         }
-        //System.out.println(Arrays.toString(allYearsFound.toArray()));
         return allYearsFound.size();
     }
 
-    public int getCounter(int i){
-        return i;
-    }
+
 
 
 }

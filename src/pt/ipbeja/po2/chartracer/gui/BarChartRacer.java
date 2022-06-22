@@ -4,11 +4,9 @@ package pt.ipbeja.po2.chartracer.gui;
 
 import javafx.application.Platform;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -22,9 +20,11 @@ import java.util.Map;
 
 
 /**
- * @author Jessé Sacramento
- * @version 20/05/2022
+ * @author Jessé Sacramento & Luiz Carlos Morais
+ * @number 21938 & 20347
+ * @version 21/06/2022
  */
+
 public class BarChartRacer {
     private final double WIDTH = 900;
     private final double HEIGHT = WIDTH / 1.5;
@@ -56,17 +56,16 @@ public class BarChartRacer {
         this.thread = new Thread(() -> {
             numberOfSets = barModel.getNumberOfYears(file);
 
-        for (int i = 0; i < numberOfSets; i++) {
+            for (int i = 0; i < numberOfSets; i++) {
                 // set the data
-                 counterLabel = i;
-                 setDataFile(file, i);
+                counterLabel = i;
+                setDataFile(file, i);
 
                 // set the values to rectangle
                 setValues();
 
 
                 createRectangleWithText(pane);
-
 
 
                 try {
@@ -145,13 +144,8 @@ public class BarChartRacer {
         number = numberOfCities.get(infoOfFirstColumn.get(i));
     }
 
-    public Line makeLines(){
-        Line line = new Line(600, y,600,200);
-        return line;
-    }
 
-
-    public void setTextInVbox(int j){
+    public void setTextInVbox(int j) {
         text = specificSet.get(j).getCityName();
         // Text
         Text txt = new Text(text);
@@ -168,22 +162,26 @@ public class BarChartRacer {
         vBox.setAlignment(Pos.CENTER_RIGHT);
     }
 
-    public void setLabels(int j){
+    public void setLabels(int j) {
         // Label
         String l = Integer.toString(specificSet.get(j).getQty());
         label = new Label(l);
-        label.setLayoutX(width + height/2);
-        label.setLayoutY((y + height/4) - space);
+        label.setLayoutX(width + height / 2);
+        label.setLayoutY((y + height / 4) - space);
         label.setFont(Font.font(18));
 
-        yearLabel= new Label(infoOfFirstColumn.get(counterLabel));
+        yearLabel = new Label(infoOfFirstColumn.get(counterLabel));
         yearLabel.setLayoutY(WIDTH - HEIGHT);
         yearLabel.setLayoutX(WIDTH);
         yearLabel.setFont(Font.font(100));
 
     }
 
-    public Rectangle rectangleWithText(int j){
+    /**
+     * @param j the index to get the specific city
+     * @return return a rectangle
+     */
+    public Rectangle rectangleWithText(int j) {
         width = getTheSpecificSpace(maxValue, HEIGHT, (specificSet.get(j).getQty()));
 
         this.city = new City(specificSet);
@@ -193,13 +191,10 @@ public class BarChartRacer {
                 , (numbersColor.get(j) * number) % 255, numbersColor.get(j)); // generate The color to the barChart
 
 
-
         Rectangle rectangle = new Rectangle(x, y, width, height - space);
         rectangle.setStroke(Color.BLACK);
         rectangle.setFill(color);
 
         return rectangle;
     }
-
-
 }

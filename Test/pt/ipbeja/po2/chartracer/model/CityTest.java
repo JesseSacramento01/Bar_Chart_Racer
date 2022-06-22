@@ -11,15 +11,17 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * @author Jessé Sacramento
- * @version 22/06/2022
+ * @author Jessé Sacramento & Luiz Carlos Morais
+ * @number 21938 & 20347
+ * @version 21/05/2022
  */
+
 class CityTest {
     @Test
     void test1() throws IOException {
 
 
-        String path = "..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt";
+        String path = "..\\21938_JesséSacramento_20347_LuizFehlbergTP_PO2_2021-2022\\files\\Cities.txt";
 
         // Expected List of cities
         List<String> expected = Arrays.asList(
@@ -105,7 +107,7 @@ class CityTest {
                 "2018,Karachi,Pakistan,18185,South Asia");
 
 
-        List<String> lines = Files.readAllLines(Paths.get("..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt"));
+        List<String> lines = Files.readAllLines(Paths.get("..\\21938_JesséSacramento_20347_LuizFehlbergTP_PO2_2021-2022\\files\\Cities.txt"));
 
 
         // A list of City objects
@@ -162,7 +164,7 @@ class CityTest {
                 "2018,Beijing,China,22674,East Asia",
                 "2018,Mumbai,India,22120,South Asia");
 
-        List<String> fileRead = Files.readAllLines(Paths.get("..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt"));
+        List<String> fileRead = Files.readAllLines(Paths.get("..\\21938_JesséSacramento_20347_LuizFehlbergTP_PO2_2021-2022\\files\\Cities.txt"));
 
         // list of cities
         List<City> cities = City.citiesList(fileRead);
@@ -175,7 +177,7 @@ class CityTest {
         // test the method that write the file
         City.writeCityFile(cities,linesQty);
         List<String> readFileWritten = Files.readAllLines(Paths.get(
-                "..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\WrittenCities.txt"));
+                "..\\21938_JesséSacramento_20347_LuizFehlbergTP_PO2_2021-2022\\files\\WrittenCities.txt"));
 
         // check if the file was written correctly
         // test for the first set
@@ -188,7 +190,7 @@ class CityTest {
 
         // test the method that write the file
         City.writeCityFile(cities,linesQty);
-        readFileWritten = Files.readAllLines(Paths.get("..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\WrittenCities.txt"));
+        readFileWritten = Files.readAllLines(Paths.get("..\\21938_JesséSacramento_20347_LuizFehlbergTP_PO2_2021-2022\\files\\WrittenCities.txt"));
 
         // Check if the file was written correctly
         assertEquals(expectedCitiesLastSet, readFileWritten);
