@@ -45,5 +45,9 @@ public class BarModel {
         return allYearsFound.size();
     }
 
+    public int getCounter(int i){
+        return i;
+    }
+
 
 }

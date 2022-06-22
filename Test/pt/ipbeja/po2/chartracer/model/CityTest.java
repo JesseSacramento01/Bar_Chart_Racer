@@ -1,6 +1,6 @@
 package pt.ipbeja.po2.chartracer.model;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,24 +8,18 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * @author Jessé Sacramento & Luiz Carlos Morais
- * @number 21938 & 20347
- * @version 01/06/2022
+ * @author Jessé Sacramento
+ * @version 22/06/2022
  */
 class CityTest {
-    /**
-     * test to the first scenario, verify if the file was read correctly
-     * @throws IOException for the file that will be read
-     */
     @Test
     void test1() throws IOException {
 
 
-        String path = "..C:\\Users\\_luiz_morais_\\Desktop\\PO2\\Bar_Chart_Racer\\files\\Cities.txt";
+        String path = "..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt";
 
         // Expected List of cities
         List<String> expected = Arrays.asList(
@@ -43,12 +37,8 @@ class CityTest {
                 "1500,Vijayanagar,India,500,South Asia");
 
 
-
-
         // the lines were read and passed to a list of Strings
         List<String> linesRead = Files.readAllLines(Paths.get(path));
-
-
 
 
         // list of objects from the class City
@@ -115,9 +105,7 @@ class CityTest {
                 "2018,Karachi,Pakistan,18185,South Asia");
 
 
-
-
-        List<String> lines = Files.readAllLines(Paths.get("..\\PO2\\Bar_Chart_Racer\\files\\Cities.txt"));
+        List<String> lines = Files.readAllLines(Paths.get("..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt"));
 
 
         // A list of City objects
@@ -135,51 +123,38 @@ class CityTest {
         // sort the list
         City.sortCities(cities);
 
-        System.out.println("After: " + cities);
-
-        // transform in a list of type String
         citiesListToString = City.citiesListToString(cities);
 
-        // check if now are equals
+        // check if now they are equals
         assertEquals(expected, citiesListToString);
 
 
+        // Last set
 
-        // test for the last set
-
-
-        // A list of City objects
         cities = City.citiesList(lines);
 
-        cities = City.getSpecificSet(cities,"2018");
+        // get the specific set of 1500 year
+        cities = City.getSpecificSet(cities, "2018");
 
-        // transform in a list of type String
-        citiesListToString = City.citiesListToString(cities);
 
-        // check if are really different
-        assertNotEquals(expectedLastSet, citiesListToString);
-
-        // sort the list
         City.sortCities(cities);
 
+        // pass toString
         citiesListToString = City.citiesListToString(cities);
 
+        // check if is ordered
         assertEquals(expectedLastSet, citiesListToString);
-
 
     }
 
-
     @Test
     void test3() throws IOException {
-
         List<String> expectedCitiesFirstSet = Arrays.asList(
                 "1500,Beijing,China,672,East Asia",
                 "1500,Vijayanagar,India,500,South Asia",
                 "1500,Cairo,Egypt,400,Middle East",
                 "1500,Hangzhou,China,250,East Asia",
                 "1500,Tabriz,Iran,250,Middle East");
-
         List<String> expectedCitiesLastSet = Arrays.asList(
                 "2018,Tokyo,Japan,38194,East Asia",
                 "2018,Delhi,India,27890,South Asia",
@@ -187,46 +162,35 @@ class CityTest {
                 "2018,Beijing,China,22674,East Asia",
                 "2018,Mumbai,India,22120,South Asia");
 
-        List<String> fileRead = Files.readAllLines(Paths.get("..\\PO2\\Bar_Chart_Racer\\files\\Cities.txt"));
-
+        List<String> fileRead = Files.readAllLines(Paths.get("..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt"));
 
         // list of cities
         List<City> cities = City.citiesList(fileRead);
 
         //sort the list
         City.sortCities(cities);
-
         cities = City.getSpecificSet(cities,"1500");
-
         int linesQty = 5;
 
         // test the method that write the file
         City.writeCityFile(cities,linesQty);
-
-        List<String> readFileWritten = Files.readAllLines(Paths.get("..\\PO2\\Bar_Chart_Racer\\files\\WrittenCities.txt"));
+        List<String> readFileWritten = Files.readAllLines(Paths.get(
+                "..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\WrittenCities.txt"));
 
         // check if the file was written correctly
         // test for the first set
         assertEquals(expectedCitiesFirstSet, readFileWritten);
 
-
         // test for the second set
-
         cities = City.citiesList(fileRead);
-
         City.sortCities(cities);
-
         cities = City.getSpecificSet(cities,"2018");
 
         // test the method that write the file
         City.writeCityFile(cities,linesQty);
-
-        readFileWritten = Files.readAllLines(Paths.get("..\\PO2\\Bar_Chart_Racer\\files\\WrittenCities.txt"));
+        readFileWritten = Files.readAllLines(Paths.get("..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\WrittenCities.txt"));
 
         // Check if the file was written correctly
         assertEquals(expectedCitiesLastSet, readFileWritten);
-
     }
-
-
 }
