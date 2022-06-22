@@ -1,21 +1,19 @@
 package pt.ipbeja.po2.chartracer.model;
 
-import javafx.scene.paint.Color;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 /**
- * @author Jessé Sacramento
- * @number 21938
+ * @author Jessé Sacramento & Luiz Carlos Morais
+ * @number 21938 & 20347
  * @version 01/06/2022
  */
 class CityTest {
@@ -27,7 +25,7 @@ class CityTest {
     void test1() throws IOException {
 
 
-        String path = "..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt";
+        String path = "..C:\\Users\\_luiz_morais_\\Desktop\\PO2\\Bar_Chart_Racer\\files\\Cities.txt";
 
         // Expected List of cities
         List<String> expected = Arrays.asList(
@@ -119,7 +117,7 @@ class CityTest {
 
 
 
-        List<String> lines = Files.readAllLines(Paths.get("..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt"));
+        List<String> lines = Files.readAllLines(Paths.get("..\\PO2\\Bar_Chart_Racer\\files\\Cities.txt"));
 
 
         // A list of City objects
@@ -189,7 +187,7 @@ class CityTest {
                 "2018,Beijing,China,22674,East Asia",
                 "2018,Mumbai,India,22120,South Asia");
 
-        List<String> fileRead = Files.readAllLines(Paths.get("..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt"));
+        List<String> fileRead = Files.readAllLines(Paths.get("..\\PO2\\Bar_Chart_Racer\\files\\Cities.txt"));
 
 
         // list of cities
@@ -205,7 +203,7 @@ class CityTest {
         // test the method that write the file
         City.writeCityFile(cities,linesQty);
 
-        List<String> readFileWritten = Files.readAllLines(Paths.get("..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\WrittenCities.txt"));
+        List<String> readFileWritten = Files.readAllLines(Paths.get("..\\PO2\\Bar_Chart_Racer\\files\\WrittenCities.txt"));
 
         // check if the file was written correctly
         // test for the first set
@@ -223,7 +221,7 @@ class CityTest {
         // test the method that write the file
         City.writeCityFile(cities,linesQty);
 
-        readFileWritten = Files.readAllLines(Paths.get("..\\21938_JesséSacramento_TP_PO2_2021-2022\\WrittenCities.txt"));
+        readFileWritten = Files.readAllLines(Paths.get("..\\PO2\\Bar_Chart_Racer\\files\\WrittenCities.txt"));
 
         // Check if the file was written correctly
         assertEquals(expectedCitiesLastSet, readFileWritten);
