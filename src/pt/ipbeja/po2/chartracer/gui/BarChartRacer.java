@@ -1,12 +1,11 @@
 
 package pt.ipbeja.po2.chartracer.gui;
 
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -16,16 +15,12 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import pt.ipbeja.po2.chartracer.model.BarModel;
 import pt.ipbeja.po2.chartracer.model.City;
-import javafx.scene.control.Label;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Jessé Sacramento
@@ -34,20 +29,29 @@ import java.util.Map;
 public class BarChartRacer {
     private final double WIDTH = 900;
     private final double HEIGHT = WIDTH / 1.5;
+/**/
     City city;
+    BarModel model = new BarModel();
 
+    private List<String> file;
+    private Pane pane;
 
-    public void barRectangle(Pane pane, List<String> file) {
+    public BarChartRacer(Pane pane, List<String> file) {
+        this.pane = pane;
+        this.file =  file;
 
+    }
 
-        List<City> cities; // list of cities
+    /**/
+
+    public void barRectangle() {
         List<City> specificSet; // list of specific set
 
-        cities = City.citiesList(file); // list of the file
+        List<City> cities = City.citiesList(this.file);// list of the file
 
         List<String> infoOfFirstColumn = City.findAllFirstData(cities); // info of the first information in each line
 
-        Map<String, Integer> numberOfCities = City.getNumberOfCities(file); // get the number of cities
+        Map<String, Integer> numberOfCities = City.getNumberOfCities(this.file); // get the number of cities
         int number = numberOfCities.get(infoOfFirstColumn.get(0));
 
         double height = HEIGHT / number;
@@ -57,7 +61,7 @@ public class BarChartRacer {
 
         City.sortCities(cities); // sort the list of cities
 
-        specificSet = City.getSpecificSet(cities, "2018"); // specific set
+        specificSet = City.getSpecificSet(cities, model.yearToPrint); // specific set
 
         double maxValue = City.getMaxValue(specificSet);
 
@@ -74,7 +78,7 @@ public class BarChartRacer {
 
             // the space between the bars used in the sub width-space = to reduce the width and get some
             //space
-            createRectangleWithText(pane, x, y, width, height - space, color,
+            createRectangleWithText(x, y, width, height - space, color,
                     specificSet.get(i).getCityName());
             y += (HEIGHT / number);
         }
@@ -82,7 +86,6 @@ public class BarChartRacer {
 
 
     /**
-     * @param pane pane to show the draw
      * @param x x position
      * @param y y position
      * @param height the height of the rectangle
@@ -90,7 +93,7 @@ public class BarChartRacer {
      * @param color  color to fill the rectangle
      * @param text   text to show the name
      */
-    public void createRectangleWithText(Pane pane, double x, double y,
+    public void createRectangleWithText(double x, double y,
                                                double width, double height, Color color, String text) {
 
         Rectangle rectangle = new Rectangle(x, y, width, height );
@@ -126,36 +129,38 @@ public class BarChartRacer {
         return (height * value) / maxValue;
     }
 
+
     /**
+     * 1. model.counter = posição na lista dos anos encontrados (BarModel.allYearsFound) que se pretende ler por segundo
+     * 2. o model.allYearsFound[model.counter] vai ser o ano por segundo que se vai procurar no ficheiro
      *
-     * @param stage the stage to show the file
-     * @return return a List<String> of the chosen file
+     * 3. ir buscar a cidade e a s população
+     * 4. o tamanho da barra mudara dependendo da população (função this.barRectangle) que faz isso basicamento
      */
-    public List<String> chooseTheFile(Stage stage) {
-        FileChooser chooser = new FileChooser();
-        chooser.setTitle("Escolha O ficheiro");
-        List<String> file = new ArrayList<>();
-
-        chooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Ficheiros de texto", "*.txt"));
-
-        File initialDirectory = new File(".");
-
-        chooser.setInitialDirectory(initialDirectory);
-
-        File db = chooser.showOpenDialog(stage);
-
-        try {
-            file = Files.readAllLines(Paths.get(db.getAbsolutePath()));
-
-            // transform in a list
-
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Não foi possível abrir o ficheiro");
-            alert.show();
-            e.printStackTrace();
-        }
-        return file;
+    public void reqE4() {
+        Timer timer = new Timer();
+        int count = 0;
+        int nYears = model.getNumberOfYears(file);
+        System.out.println(nYears);
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    if (model.counter == nYears) {
+                        timer.cancel();
+                    }
+                    pane.getChildren().clear();
+                    model.yearToPrint = model.allYearsFound.get(model.counter);
+                    barRectangle();
+                    pane.getChildren().add(
+                            new Text(
+                                    pane.getPrefWidth()-200,
+                                    pane.getHeight()-50,
+                                    model.allYearsFound.get(model.counter)));
+                    model.counter++;
+                });
+            }
+        }, 0, 1000);
     }
 
 }
