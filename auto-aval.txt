@@ -1,0 +1,28 @@
+ Requisitos Essenciais
+Composto 4 requisitos:
+
+Req. E1 - Estrutura do programa
+Duvia de como comparar os ficheior(Duvida foi esclarecia pelo professor)
+
+Req. E2 - Testes do model
+
+10:45-12:30
+14:15-20:30
+
+Req. E3 - Interface com o utilizador
+
+Foi um pouco trabalha ao pegar dados no ficheiro
+
+10:40- 16:00
+
+
+Req. E4 - Animação
+
+Duvida ao reseprentar a tabela teve se algums problemas na resempresetacao da quantidade de pupolacao  
+
+Tempo & data
+
+18:00-00:30 21/06
+
+14:00-15:30 22/06
+16:00-20:00
