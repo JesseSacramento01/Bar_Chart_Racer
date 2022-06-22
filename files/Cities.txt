@@ -6677,7 +6677,7 @@ Sources: SEDAC; United Nations; Demographia
 1976,Paris,France,9254,Europe
 1976,Rio de Janeiro,Brazil,8397,Latin America
 1976,Shanghai,China,8238,East Asia
-1976,SÃ£o Paulo,Brazil,10109,Latin America
+1976,São Paulo,Brazil,10109,Latin America
 1976,Tokyo,Japan,27002,East Asia
 
 12
