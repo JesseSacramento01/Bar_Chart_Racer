@@ -21,13 +21,14 @@ import java.util.Map;
 
 /**
  * @author Jessé Sacramento & Luiz Carlos Morais
- * @number 21938 & 20347
  * @version 21/06/2022
+ * @number 21938 & 20347
  */
 
 public class BarChartRacer {
     private final double WIDTH = 900;
     private final double HEIGHT = WIDTH / 1.5;
+    private final static int RGB_NUMBER = 255;
     City city;
     Thread thread;
     List<City> cities; // list of cities
@@ -41,30 +42,30 @@ public class BarChartRacer {
     private int space;
     private double maxValue;
     private double width;
-    private Color color;
-    private String text;
     private int numberOfSets;
     private Label label;
     private Label yearLabel;
     private int counterLabel;
     private VBox vBox;
+    private BarModel barModel;
 
 
-    public void barRectangle(Pane pane, List<String> file) {
-        BarModel barModel = new BarModel();
+    public void dynamicBarChart(Pane pane, List<String> file) {
+        barModel = new BarModel();
 
         this.thread = new Thread(() -> {
             numberOfSets = barModel.getNumberOfYears(file);
 
             for (int i = 0; i < numberOfSets; i++) {
                 // set the data
+
                 counterLabel = i;
                 setDataFile(file, i);
 
                 // set the values to rectangle
                 setValues();
 
-
+                // create the rectangles and insert in the pane
                 createRectangleWithText(pane);
 
 
@@ -73,8 +74,8 @@ public class BarChartRacer {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
             }
+
         });
         thread.start();
     }
@@ -89,16 +90,16 @@ public class BarChartRacer {
         List<Label> labels = new ArrayList<>();
 
         Platform.runLater(() -> {
-
             for (int j = 0; j < number; j++) {
 
-                Rectangle rectangle = rectangleWithText(j);
+                Rectangle rectangle = rectangle(j);
 
                 // Labels
                 setLabels(j);
 
                 // TextVbox
                 setTextInVbox(j);
+
 
                 // insert in pane
                 rectangleList.add(rectangle);
@@ -107,30 +108,19 @@ public class BarChartRacer {
                 y += HEIGHT / number;
 
             }
-            pane.getChildren().clear(); // to clear the last set in the pane
+            pane.getChildren().clear();
             pane.getChildren().addAll(rectangleList); // Add Vboxes
             pane.getChildren().addAll(vBoxes);
             pane.getChildren().addAll(labels);
             pane.getChildren().addAll(yearLabel);
+
         });
     }
 
-
-    /**
-     * @param maxValue the max value that is present in the file
-     * @param height   the height of the pane
-     * @param value    the qty that we get from the class City
-     * @return return the
-     */
-    public double getTheSpecificSpace(double maxValue, double height, double value) {
-        return (height * value) / maxValue;
-    }
-
-
     public void setValues() {
         this.height = HEIGHT / number;
-        this.x = 10; // position x
-        this.y = 0; // y start at zero
+        this.x = 20; // position x
+        this.y = 20; // y start at zero
         this.space = (int) ((HEIGHT / number) / number); // the space between the rectangles
         this.maxValue = City.getMaxValue(specificSet); // get the max value of all data
     }
@@ -146,7 +136,7 @@ public class BarChartRacer {
 
 
     public void setTextInVbox(int j) {
-        text = specificSet.get(j).getCityName();
+        String text = specificSet.get(j).getCityName();
         // Text
         Text txt = new Text(text);
         txt.prefHeight(height);
@@ -181,14 +171,14 @@ public class BarChartRacer {
      * @param j the index to get the specific city
      * @return return a rectangle
      */
-    public Rectangle rectangleWithText(int j) {
-        width = getTheSpecificSpace(maxValue, HEIGHT, (specificSet.get(j).getQty()));
+    public Rectangle rectangle(int j) {
+        width = this.barModel.getTheSpecificSpace(maxValue, HEIGHT, (specificSet.get(j).getQty()));
 
-        this.city = new City(specificSet);
+        this.city = new City(specificSet); // create a new object from class City
         List<Integer> numbersColor = city.getNumbers(); // hashcode
 
-        color = Color.rgb(((numbersColor.get(j) * number) % 255)
-                , (numbersColor.get(j) * number) % 255, numbersColor.get(j)); // generate The color to the barChart
+        Color color = Color.rgb(((numbersColor.get(j) * number) % RGB_NUMBER)
+                , (numbersColor.get(j) * number) % RGB_NUMBER, numbersColor.get(j)); // generate The color to the barChart
 
 
         Rectangle rectangle = new Rectangle(x, y, width, height - space);
@@ -197,4 +187,13 @@ public class BarChartRacer {
 
         return rectangle;
     }
+
+    public void staticBarChart(Pane pane, List<String> info){ // req 3
+        this.barModel = new BarModel(); // instance of the class barModel
+        setDataFile(info,0); // to get the first set of the file
+        setValues(); // to set the values to the rectangle
+        createRectangleWithText(pane); // create the rectangle and put it in pane
+    }
+
+
 }

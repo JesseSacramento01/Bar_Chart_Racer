@@ -37,13 +37,11 @@ public class Start extends Application {
         this.barChartRacer = new BarChartRacer();
         List<String> info = chooseTheFile(primaryStage);
 
-        this.barChartRacer.barRectangle(pane, info);
-
+        this.barChartRacer.dynamicBarChart(pane, info); // dynamicBarChart
+        //this.barChartRacer.staticBarChart(pane,info); // staticBarChart
         primaryStage.setScene(scene);
 
-        primaryStage.setOnCloseRequest((e) -> {
-            System.exit(0);
-        });
+        primaryStage.setOnCloseRequest((e) -> System.exit(0));
 
 
         primaryStage.show();
@@ -56,11 +54,11 @@ public class Start extends Application {
      */
     public List<String> chooseTheFile(Stage stage) {
         FileChooser chooser = new FileChooser();
-        chooser.setTitle("Escolha O ficheiro");
+        chooser.setTitle("Choose the file");
         List<String> file = new ArrayList<>();
 
         chooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Ficheiros de texto", "*.txt"));
+                new FileChooser.ExtensionFilter("Texts File", "*.txt"));
 
         File initialDirectory = new File(".");
 
@@ -74,7 +72,7 @@ public class Start extends Application {
             // transform in a list
 
         } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Não foi possível abrir o ficheiro");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "It's not possible open the file");
             alert.show();
             e.printStackTrace();
         }

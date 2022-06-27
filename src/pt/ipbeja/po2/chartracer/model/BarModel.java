@@ -29,6 +29,17 @@ public class BarModel {
     }
 
 
+    /**
+     * @param maxValue the max value that is present in the file
+     * @param height   the height of the pane
+     * @param value    the qty that we get from the class City
+     * @return return the
+     */
+    public double getTheSpecificSpace(double maxValue, double height, double value) {
+        return (height * value) / maxValue;
+    }
+
+
 
 
 }

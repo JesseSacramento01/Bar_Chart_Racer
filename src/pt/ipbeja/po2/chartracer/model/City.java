@@ -3,8 +3,6 @@ package pt.ipbeja.po2.chartracer.model;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -44,7 +42,7 @@ public class City implements Comparable<City> {
         this.numbers = new ArrayList<>();
         for (City city : cities) {
             number = city.cityName.hashCode() % DEGREE;
-            if (number < 0) { // tranform the negative number in positive
+            if (number < 0) { // transform the negative number in positive
                 number = number * -1;
             }
             numbers.add(number);
@@ -190,19 +188,19 @@ public class City implements Comparable<City> {
      * @return return a list with the number of the cities in a specific set
      */
     public static Map<String, Integer> getNumberOfCities(List<String> line) {
-        int count;
-        String key;
+
+
 
         Map<String, Integer> numberOfCity = new HashMap<>();
 
-        for (count = 0; count < line.size() - 1; count++) {
+        for (int count = 0; count < line.size() - 1; count++) {
             if (line.get(count).isEmpty()) {
                 // the next line has the number of cities --> count + 1
 
                 // count + 2 because two lines next we have the first line of the information from the cities
                 // in a specific set
                 int index = line.get(count + 2).indexOf(","); // index of the first comma
-                key = line.get(count + 2).substring(0, index);
+                String key = line.get(count + 2).substring(0, index);
                 numberOfCity.put(key, Integer.parseInt(line.get(count + 1)));
 
             }
@@ -219,19 +217,6 @@ public class City implements Comparable<City> {
         return cityName;
     }
 
-    // Main
-    public static void main(String[] args) {
-        try {
-            List<String> file = Files.readAllLines(Paths.get("..\\21938_JesséSacramento_TP_PO2_2021-2022\\files\\Cities.txt"));
-
-
-            findAllFirstData(citiesList(file));
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static long getMaxValue(List<City> cities) {
         long max = Integer.MIN_VALUE;
