@@ -1,0 +1,35 @@
+ Requisitos Essenciais
+Composto 4 requisitos:
+
+Req. E1 - Estrutura do programa
+Duvida de como comparar os ficheior(Duvida foi esclarecia pelo professor)
+1/06  --> 45 min -->  Nas Aulas
+2/06  --> 1  hora --> Fora das Aulas
+3/06  --> 2 horas --> Fora das Aulas
+
+Req. E2 - Testes do model
+
+13/06 --> 2 horas --> Fora das Aulas
+14/06 --> 2 horas --> Fora das Aulas
+
+Req. E3 - Interface com o utilizador
+
+Foi um pouco trabalha ao pegar dados no ficheiro
+
+15/06 --> 2 horas --> Nas Aulas
+20/06 --> 3 horas --> Fora das Aulas
+
+Req. E4 - Animação
+
+Duvida ao reseprentar a tabela teve se algums problemas na resempresetacao da quantidade de pupolacao  
+
+Tempo & data
+
+21/06 --> 3 horas --> Fora das Aulas
+22/06 --> 5 horas --> Fora das Aulas
+
+
+
+
+
+
