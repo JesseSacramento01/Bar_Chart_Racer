@@ -188,9 +188,6 @@ public class City implements Comparable<City> {
      * @return return a list with the number of the cities in a specific set
      */
     public static Map<String, Integer> getNumberOfCities(List<String> line) {
-
-
-
         Map<String, Integer> numberOfCity = new HashMap<>();
 
         for (int count = 0; count < line.size() - 1; count++) {
@@ -218,7 +215,7 @@ public class City implements Comparable<City> {
     }
 
 
-    public static long getMaxValue(List<City> cities) {
+    public static double getMaxValue(List<City> cities) {
         long max = Integer.MIN_VALUE;
         for (City city : cities) {
             if (city.getQty() > max) {

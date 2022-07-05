@@ -1,0 +1,7 @@
+Number of data sets in file: ??
+First date: YYYY/MM/DD
+Last date: YYYY/MM/DD
+Average number of lines in each data set: ??
+Number of columns in each data set: ??
+Maximum value considering all data sets: ??
+Minimum value considering all data sets: ??

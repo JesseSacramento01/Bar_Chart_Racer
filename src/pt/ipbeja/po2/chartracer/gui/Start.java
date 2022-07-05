@@ -7,11 +7,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import pt.ipbeja.po2.chartracer.model.BarModel;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,50 +34,19 @@ public class Start extends Application {
     @Override
     public void start(Stage primaryStage) {
         Pane pane = new Pane();
+        pane.setMaxHeight(BarChartRacer.getHEIGHT());
+        pane.setMaxWidth(BarChartRacer.getWIDTH());
         Scene scene = new Scene(pane, Color.AZURE);
 
-        this.barChartRacer = new BarChartRacer();
-        List<String> info = chooseTheFile(primaryStage);
+        BarModel barModel = new BarModel();
+        this.barChartRacer = new BarChartRacer(barModel);
+        this.barChartRacer.chooseTheFile(primaryStage);
 
-        this.barChartRacer.dynamicBarChart(pane, info); // dynamicBarChart
-        //this.barChartRacer.staticBarChart(pane,info); // staticBarChart
+        this.barChartRacer.dynamicBarChart(pane, this.barChartRacer.getFile()); // dynamicBarChart
+        //this.barChartRacer.staticBarChart(pane,this.barChartRacer.getFile()); // staticBarChart
         primaryStage.setScene(scene);
 
         primaryStage.setOnCloseRequest((e) -> System.exit(0));
-
-
         primaryStage.show();
-
-    }
-
-    /**
-     * @param stage the stage to show the file
-     * @return return a List<String> of the chosen file
-     */
-    public List<String> chooseTheFile(Stage stage) {
-        FileChooser chooser = new FileChooser();
-        chooser.setTitle("Choose the file");
-        List<String> file = new ArrayList<>();
-
-        chooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Texts File", "*.txt"));
-
-        File initialDirectory = new File(".");
-
-        chooser.setInitialDirectory(initialDirectory);
-
-        File db = chooser.showOpenDialog(stage);
-
-        try {
-            file = Files.readAllLines(Paths.get(db.getAbsolutePath()));
-
-            // transform in a list
-
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "It's not possible open the file");
-            alert.show();
-            e.printStackTrace();
-        }
-        return file;
     }
 }

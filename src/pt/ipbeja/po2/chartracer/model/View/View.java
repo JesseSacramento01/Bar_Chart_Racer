@@ -7,6 +7,6 @@ package pt.ipbeja.po2.chartracer.model.View;
  */
 public interface View {
 
- public void chooseYear();
+ public void showDataStatistics();
 
 }

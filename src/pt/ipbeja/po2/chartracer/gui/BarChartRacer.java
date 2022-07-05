@@ -4,6 +4,7 @@ package pt.ipbeja.po2.chartracer.gui;
 
 import javafx.application.Platform;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -11,12 +12,23 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import pt.ipbeja.po2.chartracer.model.BarModel;
 import pt.ipbeja.po2.chartracer.model.City;
+import pt.ipbeja.po2.chartracer.model.View.View;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static pt.ipbeja.po2.chartracer.model.City.getMaxValue;
 
 
 /**
@@ -25,9 +37,9 @@ import java.util.Map;
  * @number 21938 & 20347
  */
 
-public class BarChartRacer {
-    private final double WIDTH = 900;
-    private final double HEIGHT = WIDTH / 1.5;
+public class BarChartRacer implements View {
+    private static final double WIDTH = 900;
+    private static final double HEIGHT = WIDTH / 1.5;
     private final static int RGB_NUMBER = 255;
     City city;
     Thread thread;
@@ -35,6 +47,7 @@ public class BarChartRacer {
     List<City> specificSet; // list of specific set
     List<String> infoOfFirstColumn; // info about the the first data in the first column of each line
     Map<String, Integer> numberOfCities; // get the number of cities
+    List<String> file = new ArrayList<>();
     private int number; // store the number of cities
     private double height;
     private double x;
@@ -42,19 +55,26 @@ public class BarChartRacer {
     private int space;
     private double maxValue;
     private double width;
-    private int numberOfSets;
+    private long numberOfSets;
     private Label label;
     private Label yearLabel;
     private int counterLabel;
     private VBox vBox;
     private BarModel barModel;
+    private String accessTime;
+    private String lastTimeAccess;
+
+    public BarChartRacer(BarModel barModel) {
+        this.barModel = barModel;
+        this.barModel.setView(this);
+    }
 
 
     public void dynamicBarChart(Pane pane, List<String> file) {
         barModel = new BarModel();
 
         this.thread = new Thread(() -> {
-            numberOfSets = barModel.getNumberOfYears(file);
+            numberOfSets = BarModel.getNumberOfSets(file);
 
             for (int i = 0; i < numberOfSets; i++) {
                 // set the data
@@ -68,16 +88,16 @@ public class BarChartRacer {
                 // create the rectangles and insert in the pane
                 createRectangleWithText(pane);
 
-
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-
         });
         thread.start();
+
+
     }
 
 
@@ -122,7 +142,7 @@ public class BarChartRacer {
         this.x = 20; // position x
         this.y = 20; // y start at zero
         this.space = (int) ((HEIGHT / number) / number); // the space between the rectangles
-        this.maxValue = City.getMaxValue(specificSet); // get the max value of all data
+        this.maxValue = getMaxValue(specificSet); // get the max value of all data
     }
 
     public void setDataFile(List<String> file, int i) {
@@ -188,12 +208,75 @@ public class BarChartRacer {
         return rectangle;
     }
 
-    public void staticBarChart(Pane pane, List<String> info){ // req 3
+    public void staticBarChart(Pane pane, List<String> info) { // req 3
         this.barModel = new BarModel(); // instance of the class barModel
-        setDataFile(info,0); // to get the first set of the file
+        setDataFile(info, 0); // to get the first set of the file
         setValues(); // to set the values to the rectangle
         createRectangleWithText(pane); // create the rectangle and put it in pane
     }
 
+    public static double getWIDTH() {
+        return WIDTH;
+    }
 
+    public static double getHEIGHT() {
+        return HEIGHT;
+    }
+
+
+    /**
+     * @param stage the stage to show the file
+     * @return return a List<String> of the chosen file
+     */
+    public void chooseTheFile(Stage stage) {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Choose the file");
+
+
+        chooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Texts File", "*.txt"));
+
+        File initialDirectory = new File(".");
+
+        chooser.setInitialDirectory(initialDirectory);
+
+        File db = chooser.showOpenDialog(stage);
+
+        // to get the information about the file
+        try {
+            BasicFileAttributes fileAttributes = Files.readAttributes(
+                    Paths.get(db.getAbsolutePath()), BasicFileAttributes.class);
+            this.accessTime = fileAttributes.creationTime().toString().substring(0,10);
+            this.lastTimeAccess = fileAttributes.lastAccessTime().toString().substring(0,10);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            file = Files.readAllLines(Paths.get(db.getAbsolutePath()));
+            // transform in a list
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "It's not possible open the file");
+            alert.show();
+            e.printStackTrace();
+        }
+    }
+
+    public String getAccessTime() {
+        return accessTime;
+    }
+
+    public String getLastTimeAccess() {
+        return lastTimeAccess;
+    }
+
+    @Override
+    public void showDataStatistics() {
+
+    }
+
+    public List<String> getFile() {
+        return file;
+    }
 }
