@@ -21,12 +21,41 @@ Foi um pouco trabalha ao pegar dados no ficheiro
 
 Req. E4 - Animação
 
-Duvida ao reseprentar a tabela teve se algums problemas na resempresetacao da quantidade de pupolacao  
+Duvida ao reseprentar a tabela teve-se algums problemas na resempresetacão da quantidade de pupolacão
 
 Tempo & data
 
 21/06 --> 3 horas --> Fora das Aulas
 22/06 --> 5 horas --> Fora das Aulas
+
+
+Req. NE1 - Aspeto visual dos gráficos
+
+Não foi muito difícil, as skins adicionas apenas foram aplicadas nas barras, ou seja cada skin gera cores
+totatalmentes diferentes.
+
+Tempo & data
+
+02/07 --> 5 horas --> fora das Aulas
+04/07 --> 4 horas --> Fora das Aulas
+
+Req. NE2 - Criação de ficheiro de dados estatísticos
+
+Foi particularmente mais fácil, tinha apenas que usar metodos já criados, e no máximo criar 2 a mais.
+
+05/07 --> 3 horas
+
+Req. NE3 Utilização de polimorfismo
+
+Foi seguido alguns dos exemplos de polimorfismos mostrados pelo docente, foi um dos
+mais complicados requisitos por conta das ligações que tinham que ser feitas
+
+05/07 --> 3 horas --> Fora das Aulas
+06/07 --> 5 horas --> Fora das Aulas
+07/07 --> 7 horas --> Foras das Aulas
+
+Penso que por ter cumprido todos os requisitos, me considero capaz de ter um 14 ou 15
+
 
 
 

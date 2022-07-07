@@ -254,7 +254,7 @@ public class BarModel {
         List<String> c = citiesListToString(cities);
 
         for (int i = 0; i < cities.size(); i++) {
-            count = (int) Arrays.stream(c.get(i).split(",")).count();
+           count =  c.get(i).split(",").length;
         }
         return count;
     }

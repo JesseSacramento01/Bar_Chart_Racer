@@ -37,15 +37,15 @@ import java.util.Map;
 public class BarChartRacer implements View {
     private static final double WIDTH = 900;
     private static final double HEIGHT = WIDTH / 1.5;
-    City city;
-    Thread thread;
-    List<City> cities; // list of cities
-    List<City> specificSet; // list of specific set
-    List<String> infoOfFirstColumn; // info about the the first data in the first column of each line
-    Map<String, Integer> numberOfCities; // get the number of cities
-    CheckMenuItem sub1;
-    MenuItem choose;
-    List<String> file = new ArrayList<>();
+    private static final double POSITION_SOURCE = 490;
+    private static final double POSITION_SOURCE_X = 80;
+    private City city;
+    private List<City> cities; // list of cities
+    private List<City> specificSet; // list of specific set
+    private List<String> infoOfFirstColumn; // info about the the first data in the first column of each line
+    private CheckMenuItem sub1;
+    private MenuItem choose;
+    private List<String> file = new ArrayList<>();
     private static List<String> newFile;
     private int number; // store the number of cities
     private double height;
@@ -62,14 +62,14 @@ public class BarChartRacer implements View {
     private BarModel barModel;
     private String accessTime;
     private String lastTimeAccess;
-    Group root;
-    Colors colorsType;
-    CheckMenuItem skinsTypes;
-    CheckMenuItem skinsTypes2;
-    CheckMenuItem skinsTypes3;
-    VBox vBoxTitle;
-    VBox vBoxSubTitle;
-    VBox vboxSource;
+    private Group root;
+    private Colors colorsType;
+    private CheckMenuItem skinsTypes;
+    private CheckMenuItem skinsTypes2;
+    private CheckMenuItem skinsTypes3;
+    private VBox vBoxTitle;
+    private VBox vBoxSubTitle;
+    private VBox vboxSource;
 
 
     public BarChartRacer(BarModel barModel) {
@@ -81,7 +81,7 @@ public class BarChartRacer implements View {
     public void dynamicBarChart(Pane pane, List<String> file) {
         barModel = new BarModel();
         barModel.setView(this);
-        this.thread = new Thread(() -> {
+        Thread thread = new Thread(() -> {
 
 
             numberOfSets = barModel.getNumberOfSets(file);
@@ -108,6 +108,7 @@ public class BarChartRacer implements View {
                 }
             }
         });
+        this.barModel.statisticData();
         thread.start();
 
 
@@ -142,7 +143,7 @@ public class BarChartRacer implements View {
 
 
             }
-            insertInPane(pane,rectangleList,vBoxes,labels); // to insert in pane
+            insertInPane(pane, rectangleList, vBoxes, labels); // to insert in pane
         });
     }
 
@@ -158,14 +159,13 @@ public class BarChartRacer implements View {
     public void setDataFile(List<String> file, int i) {
         cities = barModel.citiesList(file); // list of the file
         infoOfFirstColumn = barModel.findAllFirstData(cities); // info of the first information in each line
-        numberOfCities = barModel.getNumberOfCities(file); // get the number of cities
+        Map<String, Integer> numberOfCities = barModel.getNumberOfCities(file); // get the number of cities
         barModel.sortCities(cities); // sort the list of cities
         specificSet = barModel.getSpecificSet(cities, infoOfFirstColumn.get(i)); // specific set
         number = numberOfCities.get(infoOfFirstColumn.get(i));
     }
 
     /**
-     *
      * @param j the index to generate the different texts
      */
     public void setTextInVbox(int j) {
@@ -186,7 +186,6 @@ public class BarChartRacer implements View {
     }
 
     /**
-     *
      * @param j the index to generate the different labels
      */
     public void setLabels(int j) {
@@ -206,7 +205,7 @@ public class BarChartRacer implements View {
         titleLabel.setFont(Font.font(30));
         vBoxTitle = new VBox(titleLabel);
         vBoxTitle.setLayoutY(0);
-        vBoxTitle.setLayoutX((WIDTH / 4 ) - space);
+        vBoxTitle.setLayoutX((WIDTH / 4) - space);
         vBoxTitle.setAlignment(Pos.TOP_CENTER);
 
         Label subTitleLabel = new Label(getFile().get(1));
@@ -220,8 +219,8 @@ public class BarChartRacer implements View {
         sourceLabel.setFont(Font.font(18));
         sourceLabel.setDisable(true);
         vboxSource = new VBox(sourceLabel);
-        vboxSource.setLayoutY(WIDTH - 520);
-        vboxSource.setLayoutX(WIDTH);
+        vboxSource.setLayoutY(WIDTH - POSITION_SOURCE);
+        vboxSource.setLayoutX(WIDTH - POSITION_SOURCE_X);
         vboxSource.setAlignment(Pos.CENTER);
     }
 
@@ -235,13 +234,12 @@ public class BarChartRacer implements View {
 
         Color color1 = colorsType.colorType(j);
 
-        Rectangles rectangles = new Rectangles(x, y, width, height, color1);
+        Rectangles rectangles = new Rectangles(x, y, width, height - space, color1);
 
         return rectangles.getRectangle();
     }
 
     /**
-     *
      * @param pane pane to show the barChart
      * @param info the file to be read and get the the information
      */
@@ -253,7 +251,6 @@ public class BarChartRacer implements View {
     }
 
     /**
-     *
      * @return the pane WIDTH
      */
     public static double getWIDTH() {
@@ -261,7 +258,6 @@ public class BarChartRacer implements View {
     }
 
     /**
-     *
      * @return the pane HEIGHT
      */
     public static double getHEIGHT() {
@@ -273,7 +269,10 @@ public class BarChartRacer implements View {
      * @param stage the stage to show the scene
      */
     public void chooseTheFile(Stage stage) {
+
+
         FileChooser chooser = new FileChooser();
+
         chooser.setTitle("Choose the file");
 
 
@@ -313,21 +312,21 @@ public class BarChartRacer implements View {
         Menu fileMenu = new Menu("Data");
         Menu fileMenu2 = new Menu("Skin");
         //Creating menu Items
-        Menu view = new Menu("Statistic Data");
+        Menu statisticData = new Menu("Statistic Data");
         choose = new MenuItem("Choose the File");
         // to skins
         Menu skins = new Menu("Skins");
-        //Creating menu items for the sub item edit
+        //Creating menu items
         sub1 = new CheckMenuItem("Generate File");
         // skins checks menu
         skinsTypes = new CheckMenuItem("Skin1");
         skinsTypes2 = new CheckMenuItem("Skin2");
         skinsTypes3 = new CheckMenuItem("Skin3");
         //Adding sub items to the edit
-        view.getItems().add(sub1);
+        statisticData.getItems().add(sub1);
         skins.getItems().addAll(skinsTypes, skinsTypes2, skinsTypes3);
         //Adding all the menu items to the menu
-        fileMenu.getItems().addAll(view, choose);
+        fileMenu.getItems().addAll(statisticData, choose);
         fileMenu2.getItems().addAll(skins);
         //Creating a menu bar and adding menu to it.
         MenuBar menuBar = new MenuBar(fileMenu, fileMenu2);
@@ -341,14 +340,13 @@ public class BarChartRacer implements View {
     }
 
     /**
-     *
      * @return return the time of access of the current file
      */
     public String getAccessTime() {
         return accessTime;
     }
+
     /**
-     *
      * @return return the last time of access of the current file
      */
     public String getLastTimeAccess() {
@@ -413,7 +411,6 @@ public class BarChartRacer implements View {
     }
 
     /**
-     *
      * @return return the read file
      */
     public List<String> getFile() {
@@ -421,7 +418,6 @@ public class BarChartRacer implements View {
     }
 
     /**
-     *
      * @return the Menus root
      */
     public Group getRoot() {
@@ -433,7 +429,6 @@ public class BarChartRacer implements View {
     }
 
     /**
-     *
      * @return a menuItem
      */
     public MenuItem getChoose() {
@@ -441,7 +436,6 @@ public class BarChartRacer implements View {
     }
 
     /**
-     *
      * @return the tha will be generate to pass the statisticData information
      */
     public static List<String> getNewFile() {
@@ -457,6 +451,6 @@ public class BarChartRacer implements View {
         pane.getChildren().addAll(vBoxes);
         pane.getChildren().addAll(labels);
         pane.getChildren().addAll(yearLabel);
-        pane.getChildren().addAll(vBoxTitle,vBoxSubTitle,vboxSource);
+        pane.getChildren().addAll(vBoxTitle, vBoxSubTitle, vboxSource);
     }
 }

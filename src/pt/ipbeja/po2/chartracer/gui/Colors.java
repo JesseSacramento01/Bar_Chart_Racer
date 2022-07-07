@@ -14,7 +14,6 @@ import java.util.Map;
 public class Colors {
     BarModel barModel;
     BarChartRacer barChartRacer;
-    List<Integer> numbers;
     List<City> cities;
     City city;
     private static final int RGB_COLOR = 255;
@@ -37,7 +36,6 @@ public class Colors {
         return Color.rgb(((city.getNumbers().get(j) * number) % RGB_COLOR)
                 , (city.getNumbers().get(j) * number) % RGB_COLOR, city.getNumbers().get(j));
     }
-
 
 
     public Color getColor() {

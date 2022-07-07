@@ -36,4 +36,5 @@ public class ColorByCityName extends Colors{
         return Color.rgb(((super.city.getNumbers().get(j) * number) % RGB_COLOR)
                 , (super.city.getNumbers().get(j) * number) % RGB_COLOR, super.city.getNumbers().get(j));
     }
+
 }

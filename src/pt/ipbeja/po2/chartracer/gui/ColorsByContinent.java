@@ -4,8 +4,6 @@ import javafx.scene.paint.Color;
 import pt.ipbeja.po2.chartracer.model.BarModel;
 import pt.ipbeja.po2.chartracer.model.City;
 
-import java.util.Map;
-
 /**
  * @author Jessé Sacramento
  * @version 07/07/2022
@@ -21,10 +19,6 @@ public class ColorsByContinent extends Colors {
 
     @Override
     public Color colorType(int j) {
-        Map<String, Integer> cityNumber = super.barModel.getNumberOfCities(super.barChartRacer.getFile());
-        String key = super.barModel.findAllFirstData(super.cities).get(j);
-        int number = cityNumber.get(key);
-
         setColorType(super.city); // to set the view
         colorType.colorsByContinent(super.cities);
 

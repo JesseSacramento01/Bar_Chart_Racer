@@ -2,7 +2,7 @@ package pt.ipbeja.po2.chartracer.gui;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import pt.ipbeja.po2.chartracer.model.BarModel;
@@ -29,7 +29,6 @@ public class Start extends Application {
         pane.setPrefSize(BarChartRacer.getWIDTH(), BarChartRacer.getHEIGHT());
 
 
-
         BarModel barModel = new BarModel();
         this.barChartRacer = new BarChartRacer(barModel);
 
@@ -52,7 +51,6 @@ public class Start extends Application {
             primaryStage.setOnCloseRequest((e) -> System.exit(0));
             primaryStage.show();
 
-            barModel.statisticData();
         });
 
     }
