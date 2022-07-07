@@ -1,5 +1,7 @@
 package pt.ipbeja.po2.chartracer.model.View;
 
+import java.util.List;
+
 /**
  * @author Jessé Sacramento & Luiz Carlos Morais
  * @number 21938 & 20347
@@ -7,6 +9,7 @@ package pt.ipbeja.po2.chartracer.model.View;
  */
 public interface View {
 
- public void showDataStatistics();
+ void setStatisticData(List<String> statisticData);
+ void generateSkins();
 
 }

@@ -12,15 +12,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Jessé Sacramento & Luiz Carlos Morais
- * @number 21938 & 20347
  * @version 21/05/2022
+ * @number 21938 & 20347
  */
 
 class CityTest {
     @Test
     void test1() throws IOException {
 
-
+        BarModel barModel = new BarModel();
         String path = "..\\21938_JesséSacramento_20347_LuizFehlbergTP_PO2_2021-2022\\files\\Cities.txt";
 
         // Expected List of cities
@@ -44,12 +44,12 @@ class CityTest {
 
 
         // list of objects from the class City
-        List<City> cities = City.citiesList(linesRead);
+        List<City> cities = barModel.citiesList(linesRead);
 
-        cities = City.getSpecificSet(cities, "1500");
+        cities = barModel.getSpecificSet(cities, "1500");
 
         // transform the list of city on a list of Strings
-        List<String> cityListToString = City.citiesListToString(cities);
+        List<String> cityListToString = barModel.citiesListToString(cities);
 
         // verify if the file was correctly read
         assertEquals(expected, cityListToString);
@@ -58,13 +58,13 @@ class CityTest {
         String lastLine = "2018,Tokyo,Japan,38194,East Asia";
 
         // list of objects city
-        cities = City.citiesList(linesRead);
+        cities = barModel.citiesList(linesRead);
 
         // get the set of the 2018 year
-        cities = City.getSpecificSet(cities, "2018");
+        cities = barModel.getSpecificSet(cities, "2018");
 
         // transform the list of City in a list of String
-        cityListToString = City.citiesListToString(cities);
+        cityListToString = barModel.citiesListToString(cities);
 
         int indexOfTheLastLine = cityListToString.lastIndexOf("2018,Tokyo,Japan,38194,East Asia");
 
@@ -75,7 +75,7 @@ class CityTest {
 
     @Test
     void test2() throws IOException {
-
+        BarModel barModel = new BarModel();
         // Expected List of cities
         List<String> expected = Arrays.asList(
                 "1500,Beijing,China,672,East Asia",
@@ -111,21 +111,21 @@ class CityTest {
 
 
         // A list of City objects
-        List<City> cities = City.citiesList(lines);
+        List<City> cities = barModel.citiesList(lines);
 
         // get the specific set of 1500 year
-        cities = City.getSpecificSet(cities, "1500");
+        cities = barModel.getSpecificSet(cities, "1500");
 
         // transform in a list of type String
-        List<String> citiesListToString = City.citiesListToString(cities);
+        List<String> citiesListToString = barModel.citiesListToString(cities);
 
         // check if are really different
         assertNotEquals(expected, citiesListToString);
 
         // sort the list
-        City.sortCities(cities);
+        barModel.sortCities(cities);
 
-        citiesListToString = City.citiesListToString(cities);
+        citiesListToString = barModel.citiesListToString(cities);
 
         // check if now they are equals
         assertEquals(expected, citiesListToString);
@@ -133,16 +133,16 @@ class CityTest {
 
         // Last set
 
-        cities = City.citiesList(lines);
+        cities = barModel.citiesList(lines);
 
         // get the specific set of 1500 year
-        cities = City.getSpecificSet(cities, "2018");
+        cities = barModel.getSpecificSet(cities, "2018");
 
 
-        City.sortCities(cities);
+        barModel.sortCities(cities);
 
         // pass toString
-        citiesListToString = City.citiesListToString(cities);
+        citiesListToString = barModel.citiesListToString(cities);
 
         // check if is ordered
         assertEquals(expectedLastSet, citiesListToString);
@@ -151,6 +151,7 @@ class CityTest {
 
     @Test
     void test3() throws IOException {
+        BarModel barModel = new BarModel();
         List<String> expectedCitiesFirstSet = Arrays.asList(
                 "1500,Beijing,China,672,East Asia",
                 "1500,Vijayanagar,India,500,South Asia",
@@ -167,15 +168,15 @@ class CityTest {
         List<String> fileRead = Files.readAllLines(Paths.get("..\\21938_JesséSacramento_20347_LuizFehlbergTP_PO2_2021-2022\\files\\Cities.txt"));
 
         // list of cities
-        List<City> cities = City.citiesList(fileRead);
+        List<City> cities = barModel.citiesList(fileRead);
 
         //sort the list
-        City.sortCities(cities);
-        cities = City.getSpecificSet(cities,"1500");
+        barModel.sortCities(cities);
+        cities = barModel.getSpecificSet(cities, "1500");
         int linesQty = 5;
 
         // test the method that write the file
-        City.writeCityFile(cities,linesQty);
+        barModel.writeCityFile(cities, linesQty);
         List<String> readFileWritten = Files.readAllLines(Paths.get(
                 "..\\21938_JesséSacramento_20347_LuizFehlbergTP_PO2_2021-2022\\files\\WrittenCities.txt"));
 
@@ -184,12 +185,12 @@ class CityTest {
         assertEquals(expectedCitiesFirstSet, readFileWritten);
 
         // test for the second set
-        cities = City.citiesList(fileRead);
-        City.sortCities(cities);
-        cities = City.getSpecificSet(cities,"2018");
+        cities = barModel.citiesList(fileRead);
+        barModel.sortCities(cities);
+        cities = barModel.getSpecificSet(cities, "2018");
 
         // test the method that write the file
-        City.writeCityFile(cities,linesQty);
+        barModel.writeCityFile(cities, linesQty);
         readFileWritten = Files.readAllLines(Paths.get("..\\21938_JesséSacramento_20347_LuizFehlbergTP_PO2_2021-2022\\files\\WrittenCities.txt"));
 
         // Check if the file was written correctly

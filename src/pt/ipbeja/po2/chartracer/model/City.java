@@ -1,18 +1,18 @@
 package pt.ipbeja.po2.chartracer.model;
 
 
-import java.io.FileWriter;
-import java.io.IOException;
+import pt.ipbeja.po2.chartracer.gui.ColorType;
+
 import java.util.*;
-import java.util.stream.Stream;
+
 
 /**
  * @author Jessé Sacramento & Luiz Carlos Morais
- * @number 21938 & 20347
  * @version 21/05/2022
+ * @number 21938 & 20347
  */
 
-public class City implements Comparable<City> {
+public class City implements Comparable<City>, ColorType {
     private static final int DEGREE = 255;
     private String year;
     private String cityName;
@@ -37,6 +37,9 @@ public class City implements Comparable<City> {
         this.continentName = continentName;
     }
 
+    /**
+     * @param cities the list of cities
+     */
     public City(List<City> cities) {
         int number;
         this.numbers = new ArrayList<>();
@@ -62,49 +65,6 @@ public class City implements Comparable<City> {
 
 
     /**
-     * @param lines is a list of the file read
-     * @return cityList List of the objects from the class city
-     */
-    public static List<City> citiesList(List<String> lines) {
-        //List that will store the cities to be sorted
-        List<City> cityList = new ArrayList<>();
-
-
-        Stream<String> linesStream = lines.stream();
-
-        // filter in order to get just the information we need about the cities
-        Stream<String> linesFileFilter = linesStream.filter(s -> s.contains(","));
-
-        // transform the stream in a list
-        List<String> citiesLines = linesFileFilter.toList();
-
-        for (String s : citiesLines) {
-
-            //split a line of the file through the comma
-            String[] info = s.split(",");
-
-
-            // The object containing all the constructor attributes that will be the cities information is created
-            City city = new City(info[0], info[1], info[2], Integer.parseInt(info[3]), info[4]);
-
-            // will be inserted in a list to be sort
-            cityList.add(city);
-        }
-        return cityList;
-    }
-
-
-    /**
-     * Sort a list of objects from the class city
-     *
-     * @param cities is a List of the lines Read int the file of the cities
-     */
-    public static void sortCities(List<City> cities) {
-        Collections.sort(cities); // Sort a list of objects from the class city
-    }
-
-
-    /**
      * Method who returns the populations quantity
      *
      * @return qty the quantity of population
@@ -114,63 +74,61 @@ public class City implements Comparable<City> {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        City city = (City) o;
+        return qty == city.qty && year.equals(city.year) && cityName.equals(city.cityName) && countryName.equals(city.countryName) && Objects.equals(continentName, city.continentName);
+    }
+
+
+    // getters
+
     /**
-     * @param citiesList the list of objects of the type City
-     * @return return the list of city in a format of a String
+     * @return the Year
      */
-    public static List<String> citiesListToString(List<City> citiesList) {
-        List<String> cities = new ArrayList<>();
+    public String getYear() {
+        return year;
+    }
 
 
-        // transform the list of cities in a list of Strings
-        for (City city : citiesList) {
-            String singleLineCity = city.year + "," + city.cityName + "," + city.countryName + "," +
-                    city.qty + "," + city.continentName;
-            cities.add(singleLineCity);
-        }
-        return cities;
+    /**
+     * @return cityName
+     */
+    public String getCityName() {
+        return cityName;
+    }
+
+
+    /**
+     * @return return the hashcode number
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(cityName);
     }
 
     /**
-     * @param cities     list of City objects
-     * @param chosenYear the year chosen by the user
-     * @return return the list of a specific set
+     * @return numbers the hashcode to use in colors
      */
-    public static List<City> getSpecificSet(List<City> cities, String chosenYear) {
-        List<City> specificList = new ArrayList<>();
-        for (City city : cities) {
-            if (city.getYear().equals(chosenYear)) {
-                specificList.add(city);
-            }
-        }
-        return specificList;
+    public List<Integer> getNumbers() {
+        return numbers;
     }
 
     /**
-     * @param cities   list of cities to be sorted and written
-     * @param linesQty quantity of lines to be written
-     * @throws IOException Exception to the file that will be written
+     * @return countryName
      */
-    public static void writeCityFile(List<City> cities, int linesQty) throws IOException {
-        // list of the cities
-        List<String> citiesToString = citiesListToString(cities);
-
-        // stream to filter the information
-        Stream<String> filterStream = citiesToString.stream().limit(linesQty);
-
-        // list of the cities filtered
-        List<String> citiesToWrite = filterStream.toList();
-
-
-        FileWriter fileWriter = new FileWriter("..\\21938_JesséSacramento_20347_LuizFehlbergTP_PO2_2021-2022\\files\\WrittenCities.txt");
-
-
-        for (String list : citiesToWrite) {
-            fileWriter.write(list + "\n");
-        }
-        fileWriter.close();
+    public String getCountryName() {
+        return countryName;
     }
 
+    /**
+     * @return continentName
+     */
+    public String getContinentName() {
+        return continentName;
+    }
 
     @Override
     public String toString() {
@@ -184,81 +142,62 @@ public class City implements Comparable<City> {
     }
 
     /**
-     * @param line the lines read
-     * @return return a list with the number of the cities in a specific set
+     * @param cities a list of objects from class City
      */
-    public static Map<String, Integer> getNumberOfCities(List<String> line) {
-        Map<String, Integer> numberOfCity = new HashMap<>();
-
-        for (int count = 0; count < line.size() - 1; count++) {
-            if (line.get(count).isEmpty()) {
-                // the next line has the number of cities --> count + 1
-
-                // count + 2 because two lines next we have the first line of the information from the cities
-                // in a specific set
-                int index = line.get(count + 2).indexOf(","); // index of the first comma
-                String key = line.get(count + 2).substring(0, index);
-                numberOfCity.put(key, Integer.parseInt(line.get(count + 1)));
-
-            }
-        }
-        return numberOfCity;
-    }
-
-    // getters
-    public String getYear() {
-        return year;
-    }
-
-    public String getCityName() {
-        return cityName;
-    }
-
-
-    public static double getMaxValue(List<City> cities) {
-        long max = Integer.MIN_VALUE;
+    public void continentHashcode(List<City> cities) {
+        int number;
+        this.numbers.clear();
         for (City city : cities) {
-            if (city.getQty() > max) {
-                max = city.getQty();
+            number = city.getContinentName().hashCode() % DEGREE;
+            if (number < 0) { // transform the negative number in positive
+                number = number * -1;
             }
+            numbers.add(number);
         }
-        return max;
     }
 
-
-    public static List<String> findAllFirstData(List<City> cities) {
-        Optional<City> cityStream = cities.stream().findFirst();
-        String firstLineInformation = cityStream.stream().toList().get(0).year;
-        List<String> files = new ArrayList<>();
-
+    /**
+     * @param cities a list of objects from class City
+     */
+    public void yearHashcode(List<City> cities) {
+        int number;
+        this.numbers.clear();
         for (City city : cities) {
-            if (!(city.getYear().equals(firstLineInformation))) {
-                files.add(firstLineInformation);
-                firstLineInformation = city.getYear();
+            number = city.getContinentName().hashCode() % DEGREE;
+            if (number < 0) { // transform the negative number in positive
+                number = number * -1;
             }
+            numbers.add(number);
         }
-        files.add(firstLineInformation);
-        return files; // return all the first information of all lines
     }
 
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        City city = (City) o;
-        return qty == city.qty && year.equals(city.year) && cityName.equals(city.cityName) && countryName.equals(city.countryName) && Objects.equals(continentName, city.continentName);
+    public void colorsByContinent(List<City> cities) {
+        int number;
+        this.numbers.clear();
+        for (City city : cities) {
+            number = city.getContinentName().hashCode() % DEGREE;
+            if (number < 0) { // transform the negative number in positive
+                number = number * -1;
+            }
+            numbers.add(number);
+        }
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(cityName);
+    public void colorsByYear(List<City> cities) {
+        int number;
+        this.numbers.clear();
+        for (City city : cities) {
+            number = city.getContinentName().hashCode() % DEGREE;
+            if (number < 0) { // transform the negative number in positive
+                number = number * -1;
+            }
+            numbers.add(number);
+        }
     }
 
-
-    public List<Integer> getNumbers() {
-        return numbers;
-    }
 }
 
 
