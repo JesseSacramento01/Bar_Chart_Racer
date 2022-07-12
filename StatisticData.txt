@@ -1,6 +1,6 @@
 Number of data sets in file: 519
 First date: 2022-05-19
-Last date: 2022-07-07
+Last date: 2022-07-10
 Average number of lines in each data set: 12
 Number of columns in each data set: 5
 Maximum value considering all data sets: 38194.0

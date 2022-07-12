@@ -141,37 +141,6 @@ public class City implements Comparable<City>, ColorType {
                 '}';
     }
 
-    /**
-     * @param cities a list of objects from class City
-     */
-    public void continentHashcode(List<City> cities) {
-        int number;
-        this.numbers.clear();
-        for (City city : cities) {
-            number = city.getContinentName().hashCode() % DEGREE;
-            if (number < 0) { // transform the negative number in positive
-                number = number * -1;
-            }
-            numbers.add(number);
-        }
-    }
-
-    /**
-     * @param cities a list of objects from class City
-     */
-    public void yearHashcode(List<City> cities) {
-        int number;
-        this.numbers.clear();
-        for (City city : cities) {
-            number = city.getContinentName().hashCode() % DEGREE;
-            if (number < 0) { // transform the negative number in positive
-                number = number * -1;
-            }
-            numbers.add(number);
-        }
-    }
-
-
     @Override
     public void colorsByContinent(List<City> cities) {
         int number;

@@ -44,7 +44,10 @@ public class BarModel {
         return (height * value) / maxValue;
     }
 
-
+    /**
+     *
+     * @param view set the View
+     */
     public void setView(View view) {
         this.view = view;
     }
@@ -247,7 +250,11 @@ public class BarModel {
         return files; // return all the first information of all lines
     }
 
-
+    /**
+     *
+     * @param cities a list of objects from calss City
+     * @return return the number of columns in each set
+     */
     public int getColumns(List<City> cities) {
         int count = 0;
 
@@ -258,6 +265,13 @@ public class BarModel {
         }
         return count;
     }
+
+    /**
+     *
+     * @param cities return a list of objects from class City
+     * @param barChartRacer the instance of class BarchartRacer
+     * @return return the average of lines in each set
+     */
     public int averageOfLines(List<City> cities, BarChartRacer barChartRacer) {
         int count = 0;
         List<String> firstData = findAllFirstData(cities);
@@ -269,10 +283,6 @@ public class BarModel {
         }
 
         return count / sets;
-    }
-
-    public static void main(String[] args) {
-
     }
 
     public void callSkins() {

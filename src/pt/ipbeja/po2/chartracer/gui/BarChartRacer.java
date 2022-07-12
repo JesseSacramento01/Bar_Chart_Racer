@@ -156,6 +156,11 @@ public class BarChartRacer implements View {
         this.maxValue = barModel.getMaxValue(specificSet); // get the max value of all data
     }
 
+    /**
+     *
+     * @param file the readFile
+     * @param i the index to iterate through the file
+     */
     public void setDataFile(List<String> file, int i) {
         cities = barModel.citiesList(file); // list of the file
         infoOfFirstColumn = barModel.findAllFirstData(cities); // info of the first information in each line
@@ -442,7 +447,13 @@ public class BarChartRacer implements View {
         return newFile;
     }
 
-
+    /**
+     *
+     * @param pane the pane to show the shapes
+     * @param rectangleList a lis of rectangles
+     * @param vBoxes a list of vbox
+     * @param labels a list of labels
+     */
     public void insertInPane(Pane pane, List<Rectangle> rectangleList, List<VBox> vBoxes,
                              List<Label> labels) {
 
